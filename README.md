@@ -6,7 +6,7 @@ O turismo é caracterizado como um importante fenômeno que resulta na geração
 
 Carvalho(2022), afirma que o aquário é uma ferramenta de grande relevância turística e para poder desempenhar o seu real papel de educador ambiental se faz necessário ações de inovação. Mas para que isso seja possível, sugerimos desenvolver uma aplicação funcional, na qual possa realizar as seguintes funções: 
 
-- [ ] __*Cadastro de funcionários*__ 
+- [ ] __*Cadastro de funcionários*__  - Beatriz Camilo
 - [ ] __*Registrar os moradores do aquário*__ 
 - [ ] __*Agendar visitações*__ 
 - [ ] __*Cadastrar palestras sobre educação ambiental*__ 

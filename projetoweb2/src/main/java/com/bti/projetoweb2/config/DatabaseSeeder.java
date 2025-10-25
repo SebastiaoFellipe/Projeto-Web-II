@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-// Classe para popular o banco de dados com dados iniciais
+// Classe para popular o banco de dados com dados iniciais //
 
 @Component
 public class DatabaseSeeder implements CommandLineRunner {

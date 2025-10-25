@@ -9,3 +9,4 @@ import com.bti.projetoweb2.funcionarios.entities.Funcionario;
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
     boolean existsByCpf(String cpf);
 }
+//

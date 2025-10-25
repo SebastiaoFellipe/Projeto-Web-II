@@ -55,5 +55,5 @@ public class FuncionarioController {
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         funcionarioService.deletar(id);
         return ResponseEntity.noContent().build();
-    }
+    }//
 }

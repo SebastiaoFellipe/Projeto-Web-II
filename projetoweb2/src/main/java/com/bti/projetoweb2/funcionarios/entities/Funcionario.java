@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
-@Table(name = "funcionarios")
+@Table(name = "funcionarios")//
 public class Funcionario {
 
     @Id

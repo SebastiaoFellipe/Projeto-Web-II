@@ -9,7 +9,7 @@ import com.bti.projetoweb2.funcionarios.entities.Funcionario;
 import com.bti.projetoweb2.funcionarios.repositories.FuncionarioRepository;
 
 @Service
-public class FuncionarioService {
+public class FuncionarioService {//
 
     private final FuncionarioRepository funcionarioRepository;
 

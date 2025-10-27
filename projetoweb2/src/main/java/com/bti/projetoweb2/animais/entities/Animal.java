@@ -3,6 +3,8 @@ package com.bti.projetoweb2.animais.entities;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,12 +39,14 @@ public class Animal {
     private String especie;
 
     @NotBlank(message = "A classificação é obrigatória.")
-    private enum Classificacao { 
+    @Enumerated(EnumType.STRING)
+    private Classificacao classificacao;
+
+    public enum Classificacao { 
         AMEACADO, 
         NAO_AMEACADO, 
         EXTINTO
     }
-    private Classificacao classificacao;
 
     @NotBlank(message = "A dieta é obrigatória.")
     private String dieta;
@@ -159,5 +163,11 @@ public class Animal {
         this.idade = idade;
     }
 
-    
+    public Habitat getHabitat() {
+        return habitat;
+    }
+
+    public void setHabitat(Habitat habitat) {
+        this.habitat = habitat;
+    }
 }

@@ -10,7 +10,7 @@ import com.bti.projetoweb2.funcionarios.services.FuncionarioService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/funcionarios")
+@RequestMapping("/funcionarios")
 public class FuncionarioController {
 
     private final FuncionarioService funcionarioService;

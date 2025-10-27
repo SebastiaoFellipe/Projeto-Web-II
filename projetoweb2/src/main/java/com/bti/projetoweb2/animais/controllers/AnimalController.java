@@ -3,6 +3,7 @@ package com.bti.projetoweb2.animais.controllers;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,8 +19,38 @@ public class AnimalController {
         this.animalService = animalService;
     }
 
-    @GetMapping
+    @GetMapping///http://localhost:8080/api/animais
     public List<Animal> listarTodos() {
         return animalService.listarTodos();
+    }
+
+    @GetMapping("/{id}")//http://localhost:8080/api/animais/1
+    public Animal buscarPorId(@PathVariable Long id) {
+        return animalService.buscarPorId(id);
+    }
+
+    @GetMapping("/especie/{especie}")//http://localhost:8080/api/animais/especie/ave
+    public List<Animal> buscarPorEspecie(@PathVariable String especie) {
+        return animalService.buscarPorEspecie(especie);
+    }
+
+    @GetMapping("/status-saude/{statusSaude}")//http://localhost:8080/api/animais/status-saude/Saud%C3%A1vel
+    public List<Animal> buscarPorStatusSaude(@PathVariable String statusSaude) {
+        return animalService.buscarPorStatusSaude(statusSaude);
+    }
+
+    @GetMapping("/classificacao/{classificacao}")//http://localhost:8080/api/animais/classificacao/AMEACADO
+    public List<Animal> buscarPorClassificacao(@PathVariable Animal.Classificacao classificacao) {
+        return animalService.buscarPorClassificacao(classificacao);
+    }
+
+    @GetMapping("/habitat/{habitatId}")//http://localhost:8080/api/animais/habitat/1
+    public List<Animal> buscarPorHabitatId(@PathVariable Long habitatId) {
+        return animalService.buscarPorHabitatId(habitatId);
+    }
+
+    @GetMapping("/familia/{familia}")//http://localhost:8080/api/animais/familia/Callichthyidae
+    public List<Animal> buscarPorFamilia(@PathVariable String familia) {
+        return animalService.buscarPorFamilia(familia);
     }
 }

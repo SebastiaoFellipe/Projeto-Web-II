@@ -50,7 +50,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         if (professorRepository.count() == 0) {
 
             Professor p1 = new Professor(
-                    "Ana Beatriz",
+                    "Mariana Filho",
                     "99988877766",
                     "Biologia Marinha",
                     NivelEnsino.SUPERIOR

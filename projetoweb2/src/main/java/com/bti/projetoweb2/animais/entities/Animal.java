@@ -11,7 +11,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "animais")
@@ -38,15 +41,15 @@ public class Animal {
     @NotBlank(message = "A especie é obrigatória.")
     private String especie;
 
-    @NotBlank(message = "A classificação é obrigatória.")
-    @Enumerated(EnumType.STRING)
-    private Classificacao classificacao;
-
     public enum Classificacao { 
         AMEACADO, 
         NAO_AMEACADO, 
         EXTINTO
     }
+
+    @NotNull(message = "A classificação é obrigatória.")
+    @Enumerated(EnumType.STRING)
+    private Classificacao classificacao;
 
     @NotBlank(message = "A dieta é obrigatória.")
     private String dieta;
@@ -54,11 +57,12 @@ public class Animal {
     @NotBlank(message = "O status de saúde é obrigatório.")
     private String statusSaude;
 
-    @NotBlank(message = "A data de entrada é obrigatória.")
+    @NotNull
+    @Temporal(TemporalType.DATE)
     private Date dataEntrada;
 
-    @NotBlank(message = "A idade é obrigatória.")
-    private int idade;
+    @NotNull(message = "A idade é obrigatória.")
+    private Integer idade;
 
     public Animal() {}
 

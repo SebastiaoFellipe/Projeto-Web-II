@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,5 +54,10 @@ public class AnimalController {
     @GetMapping("/familia/{familia}")//http://localhost:8080/api/animais/familia/Callichthyidae
     public List<Animal> buscarPorFamilia(@PathVariable String familia) {
         return animalService.buscarPorFamilia(familia);
+    }
+
+    @PostMapping
+    public Animal salvar(@RequestBody Animal animal) { //http://localhost:8080/api/animais
+        return animalService.salvar(animal);
     }
 }

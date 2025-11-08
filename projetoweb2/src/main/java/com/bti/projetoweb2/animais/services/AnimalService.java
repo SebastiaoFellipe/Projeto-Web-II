@@ -5,14 +5,18 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.bti.projetoweb2.animais.entities.Animal;
+import com.bti.projetoweb2.animais.entities.Habitat;
 import com.bti.projetoweb2.animais.repositories.AnimalRepository;
+import com.bti.projetoweb2.animais.repositories.HabitatRepository;
 
 @Service
 public class AnimalService {
     private final AnimalRepository animalRepository;
+    private final HabitatRepository habitatRepository;
 
-    public AnimalService(AnimalRepository animalRepository) {
+    public AnimalService(AnimalRepository animalRepository, HabitatRepository habitatRepository) {
         this.animalRepository = animalRepository;
+        this.habitatRepository = habitatRepository;
     }
 
     public List<Animal> listarTodos() {
@@ -44,6 +48,18 @@ public class AnimalService {
     }
 
     public Animal salvar(Animal animal) {
+        if (animal.getHabitat() != null) {
+            String descricao = animal.getHabitat().getDescricao();
+            Double temperatura = animal.getHabitat().getTemperatura();
+            Habitat habitatExistente = habitatRepository.findByDescricao(descricao);
+            
+            if (habitatExistente != null && temperatura.equals(habitatExistente.getTemperatura())) {
+                animal.setHabitat(habitatExistente);
+            } else {
+                Habitat novoHabitat = habitatRepository.save(animal.getHabitat());
+                animal.setHabitat(novoHabitat);
+            }
+        }
         return animalRepository.save(animal);
     }
 

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Visitas</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/> <!-- opcional: link para estilo -->
+</head>
+<body>
+    <h1>Visitas</h1>
+
+    <!-- Formulário de busca por data -->
+    <form th:action="@{/visitas/buscar}" method="get">
+        <input type="text" name="data" placeholder="Buscar por data" 
+               th:value="${nomeBusca != null ? nomeBusca : ''}"> 
+        <button type="submit">Buscar</button>
+    </form>
+    
+    <p><a th:href="@{/visitas/nova}">Nova Visita</a></p>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Instituição</th>
+                <th>Tipo da Instituição</th>
+                <th>Responsável</th>
+                <th>Qtd de Alunos</th>
+                <th>Telefone</th>
+                <th>Funcionários</th> <!-- nova coluna -->
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="v : ${paginaVisitas.content}">
+                <td th:text="${v.id}"></td>
+                <td th:text="${v.nome}"></td>
+                <td th:text="${v.data}"></td>
+                <td th:text="${v.hora}"></td>
+                <td th:text="${v.instituicao}"></td>
+                <td th:text="${v.tipoInstituicao}"></td>
+                <td th:text="${v.professorResponsavel}"></td>
+                <td th:text="${v.qtdAlunos}"></td>
+                <td th:text="${v.telefone}"></td>
+
+                <!-- Lista de funcionários -->
+                <td>
+                    <span th:each="f, iter : ${v.funcionarios}"
+                          th:text="${f.usuario != null ? f.usuario.nome : 'Sem usuário'} + ${!iter.last ? ', ' : ''}"></span>
+                </td>
+
+                <td>
+                    <a th:href="@{/visitas/editar/{id}(id=${v.id})}">Editar</a> |
+                    <a th:href="@{/visitas/deletar/{id}(id=${v.id})}">Deletar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Paginação -->
+    <div th:if="${paginaVisitas.totalPages > 0}" style="margin-top: 20px;">
+        <span th:text="|Página ${paginaVisitas.number + 1} de ${paginaVisitas.totalPages} (Total de registros: ${paginaVisitas.totalElements})|"></span>
+        
+        <nav aria-label="Navegação da Paginação">
+            <ul style="list-style: none; padding: 0;">
+                <li style="display: inline; margin-right: 5px;" 
+                    th:class="${paginaVisitas.hasPrevious() ? '' : 'disabled'}">
+                    <a th:href="@{/visitas(page=${paginaVisitas.number - 1})}"
+                       th:if="${paginaVisitas.hasPrevious()}">Anterior</a>
+                    <span th:unless="${paginaVisitas.hasPrevious()}" style="color: #ccc;">Anterior</span>
+                </li>
+
+                <li style="display: inline; margin-right: 5px;"
+                    th:each="i : ${#numbers.sequence(0, paginaVisitas.totalPages - 1)}">
+                    <a th:href="@{/visitas(page=${i})}" th:text="${i + 1}"
+                       th:style="${i == paginaVisitas.number ? 'font-weight: bold; color: blue;' : ''}">1</a>
+                </li>
+                
+                <li style="display: inline;" 
+                    th:class="${paginaVisitas.hasNext() ? '' : 'disabled'}">
+                    <a th:href="@{/visitas(page=${paginaVisitas.number + 1})}"
+                       th:if="${paginaVisitas.hasNext()}">Próxima</a>
+                    <span th:unless="${paginaVisitas.hasNext()}" style="color: #ccc;">Próxima</span>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</body>
+</html>

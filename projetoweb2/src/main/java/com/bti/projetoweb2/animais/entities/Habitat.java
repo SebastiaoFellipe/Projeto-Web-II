@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "habitats")
@@ -20,7 +21,7 @@ public class Habitat {
     @NotBlank(message = "O tipo de ambiente é obrigatório.")
     private String tipoAmbiente;
 
-    @NotBlank(message = "A temperatura é obrigatória.")
+    @NotNull(message = "A temperatura é obrigatória.")
     private double temperatura;
 
     public Habitat() {}

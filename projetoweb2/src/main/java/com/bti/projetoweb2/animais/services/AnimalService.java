@@ -65,21 +65,36 @@ public class AnimalService {
 
     public Animal atualizar(Long id, Animal animalAtualizado) {
         return animalRepository.findById(id)
-                .map(animal -> {
-                    animal.setNome(animalAtualizado.getNome());
-                    animal.setHabitat(animalAtualizado.getHabitat());
-                    animal.setNomeCientifico(animalAtualizado.getNomeCientifico());
-                    animal.setEspecie(animalAtualizado.getEspecie());
-                    animal.setFamilia(animalAtualizado.getFamilia());
-                    animal.setGenero(animalAtualizado.getGenero());
-                    animal.setClassificacao(animalAtualizado.getClassificacao());
-                    animal.setDieta(animalAtualizado.getDieta());
-                    animal.setStatusSaude(animalAtualizado.getStatusSaude());
-                    animal.setDataEntrada(animalAtualizado.getDataEntrada());
-                    animal.setIdade(animalAtualizado.getIdade());
-                    return animalRepository.save(animal);
-                })
-                .orElseThrow(() -> new RuntimeException("Animal não encontrado."));
+            .map(animal -> {
+                if (animalAtualizado.getHabitat() != null) {
+                    String descricao = animalAtualizado.getHabitat().getDescricao();
+                    Double temperatura = animalAtualizado.getHabitat().getTemperatura();
+                    Habitat habitatExistente = habitatRepository.findByDescricao(descricao);
+
+                    if (habitatExistente != null && temperatura.equals(habitatExistente.getTemperatura())) {
+                        animal.setHabitat(habitatExistente);
+                    } else {
+                        Habitat novoHabitat = habitatRepository.save(animalAtualizado.getHabitat());
+                        animal.setHabitat(novoHabitat);
+                    }
+                } else {
+                    animal.setHabitat(null);
+                }
+
+                animal.setNome(animalAtualizado.getNome());
+                animal.setNomeCientifico(animalAtualizado.getNomeCientifico());
+                animal.setEspecie(animalAtualizado.getEspecie());
+                animal.setFamilia(animalAtualizado.getFamilia());
+                animal.setGenero(animalAtualizado.getGenero());
+                animal.setClassificacao(animalAtualizado.getClassificacao());
+                animal.setDieta(animalAtualizado.getDieta());
+                animal.setStatusSaude(animalAtualizado.getStatusSaude());
+                animal.setDataEntrada(animalAtualizado.getDataEntrada());
+                animal.setIdade(animalAtualizado.getIdade());
+
+                return animalRepository.save(animal);
+            })
+        .orElseThrow(() -> new RuntimeException("Animal não encontrado."));
     }
 
     public void deletar(Long id) {

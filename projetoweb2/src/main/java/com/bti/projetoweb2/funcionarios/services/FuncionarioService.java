@@ -9,7 +9,7 @@ import com.bti.projetoweb2.funcionarios.entities.Funcionario;
 import com.bti.projetoweb2.funcionarios.repositories.FuncionarioRepository;
 
 @Service
-public class FuncionarioService {//
+public class FuncionarioService {
 
     private final FuncionarioRepository funcionarioRepository;
 
@@ -38,9 +38,7 @@ public class FuncionarioService {//
                     funcionario.setNome(funcionarioAtualizado.getNome());
                     funcionario.setCpf(funcionarioAtualizado.getCpf());
                     funcionario.setCargo(funcionarioAtualizado.getCargo());
-                    funcionario.setSetor(funcionarioAtualizado.getSetor());
                     funcionario.setTipoVinculo(funcionarioAtualizado.getTipoVinculo());
-                    funcionario.setEspecialidade(funcionarioAtualizado.getEspecialidade());
                     return funcionarioRepository.save(funcionario);
                 })
                 .orElseThrow(() -> new RuntimeException("Funcionário não encontrado."));

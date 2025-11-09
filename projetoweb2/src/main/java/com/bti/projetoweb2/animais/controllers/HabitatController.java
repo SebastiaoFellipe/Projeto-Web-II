@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,5 +37,10 @@ public class HabitatController {
     @PostMapping//http://localhost:8080/api/habitats
     public Habitat salvar(@RequestBody Habitat habitat) {
         return habitatService.salvar(habitat);
+    }
+
+    @PutMapping("/{id}")//http://localhost:8080/api/habitats/1
+    public Habitat atualizar(@PathVariable Long id, @RequestBody Habitat habitatAtualizado) {
+        return habitatService.atualizar(id, habitatAtualizado);
     }
 }

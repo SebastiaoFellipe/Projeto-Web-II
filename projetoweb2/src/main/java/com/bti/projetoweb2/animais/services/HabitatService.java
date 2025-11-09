@@ -26,4 +26,15 @@ public class HabitatService {
     public Habitat salvar(Habitat habitat) {
         return habitatRepository.save(habitat);
     }
+
+    public Habitat atualizar(Long id, Habitat habitatAtualizado) {
+        return habitatRepository.findById(id)
+            .map(habitat -> {
+                habitat.setDescricao(habitatAtualizado.getDescricao());
+                habitat.setTipoAmbiente(habitatAtualizado.getTipoAmbiente());
+                habitat.setTemperatura(habitatAtualizado.getTemperatura());
+                return habitatRepository.save(habitat);
+            })
+            .orElse(null);
+    }
 }

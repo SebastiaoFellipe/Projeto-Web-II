@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "reabilitacoes")
@@ -21,7 +22,7 @@ public class Reabilitacao {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "animal_id")
+    @JoinColumn(name = "animal_id", nullable = false)
     @JsonBackReference
     private Animal animal;
 
@@ -30,14 +31,13 @@ public class Reabilitacao {
 
     private String tratamento;
 
-    @NotBlank(message = "A data de entrada é obrigatória.")
+    @NotNull(message = "A data de entrada é obrigatória.")
     private Date dataEntrada;
 
     private Date dataSaida;
 
     @NotBlank(message = "O status é obrigatório.")
     private String status;
-
 
     private String observacoes;
 

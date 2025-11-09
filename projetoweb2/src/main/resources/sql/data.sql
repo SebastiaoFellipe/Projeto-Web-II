@@ -26,3 +26,10 @@ INSERT INTO reabilitacoes (animal_id, motivo, tratamento, data_entrada, data_sai
 (3, 'Doença respiratória', 'Nebulização diária e antibióticos', '2025-10-10', NULL, 'Em tratamento', 'Animal ainda em observação, necessita acompanhamento diário.'),
 (2, 'Fratura na asa', 'Imobilização da asa e fisioterapia', '2025-09-20', '2025-10-05', 'Concluído', 'Recuperação completa, liberado para voo.'),
 (1, 'Troca de água inadequada', 'Correção do pH e monitoramento', '2025-10-01', '2025-10-07', 'Concluído', 'Animal reagiu bem, sem complicações.');
+
+INSERT INTO candidatos (nome, cpf, formacao_academica, email)
+VALUES
+('Ana Souza', '123.456.789-00', 'Engenharia de Software', 'ana.souza@email.com'),
+('Carlos Silva', '987.654.321-00', 'Ciência da Computação', 'carlos.silva@email.com'),
+('Beatriz Lima', '456.789.123-00', 'Sistemas de Informação', 'beatriz.lima@email.com'),
+('Daniel Costa', '321.654.987-00', 'Análise e Desenvolvimento de Sistemas', 'daniel.costa@email.com');

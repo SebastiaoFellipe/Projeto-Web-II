@@ -49,3 +49,11 @@ CREATE TABLE reabilitacoes (
     observacoes TEXT,
     FOREIGN KEY (animal_id) REFERENCES animais(id)
 );
+
+CREATE TABLE candidatos (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
+    formacao_academica VARCHAR(150) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE
+);

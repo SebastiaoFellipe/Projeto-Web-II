@@ -3,6 +3,7 @@ package com.bti.projetoweb2.animais.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,5 +68,10 @@ public class AnimalController {
     @PutMapping("/{id}")//http://localhost:8080/api/animais/1
     public Animal atualizar(@PathVariable Long id, @RequestBody Animal animalAtualizado) {
         return animalService.atualizar(id, animalAtualizado);
+    }
+
+    @DeleteMapping("/{id}")//http://localhost:8080/api/animais/1
+    public void deletar(@PathVariable Long id) {
+        animalService.deletar(id);
     }
 }

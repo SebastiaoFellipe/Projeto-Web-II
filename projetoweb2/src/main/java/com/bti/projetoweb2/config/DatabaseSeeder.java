@@ -53,7 +53,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                     "Mariana Filho",
                     "99988877766",
                     "Biologia Marinha",
-                    NivelAcademico.GRADUAÇÃO
+                    NivelAcademico.GRADUACAO
             );
 
             Professor p2 = new Professor(

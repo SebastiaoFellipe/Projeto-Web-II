@@ -59,3 +59,21 @@ CREATE TABLE candidatos (
     formacao_academica VARCHAR(150) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE
 );
+
+-- Tabela Professores
+CREATE TABLE professores(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL,
+    cpf CHAR(11) NOT NULL UNIQUE,
+    area_aplicada VARCHAR(100) NOT NULL,
+    nivel_academico ENUM('GRADUACAO','MESTRADO','DOUTORADO','POS-DOUTORADO') NOT NULL,
+);
+
+-- Tabela funcionarios
+CREATE TABLE funcionarios (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL,
+    cpf CHAR(11) NOT NULL UNIQUE,
+    cargo VARCHAR(100) NOT NULL,
+    tipo_vinculo ENUM('FIXO','TEMPORÁRIO','ESTAGIARIO') NOT NULL,
+);

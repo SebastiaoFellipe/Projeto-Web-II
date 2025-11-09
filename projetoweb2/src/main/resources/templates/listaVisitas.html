@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Visitas</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/> <!-- opcional: link para estilo -->
+</head>
+<body>
+    <h1>Visitas Encontradas</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Data</th>
+                <th>Hora</th> <!-- Adicionando a coluna Hora -->
+                <th>Instituição</th> <!-- Adicionando a coluna Instituição -->
+				<th>Tipo Instituição</th> <!-- Adicionando a coluna Instituição -->
+                <th>Professor Responsável</th> <!-- Adicionando a coluna Professor Responsável -->
+                <th>Ações</th> <!-- Coluna para editar/excluir -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="visita : ${visitas}">
+                <td th:text="${visita.id}"></td>
+                <td th:text="${visita.nome}"></td>
+                <td th:text="${visita.data}"></td>
+                <td th:text="${visita.hora}"></td>
+                <td th:text="${visita.instituicao}"></td>
+				<td th:text="${visita.tipoInstituicao}"></td>
+                <td th:text="${visita.professorResponsavel}"></td>
+                <td>
+                    <a th:href="@{/visitas/{id}(id=${visita.id})}" title="Editar visita">Editar</a> |
+                    <a th:href="@{/visitas/deletar/{id}(id=${visita.id})}" title="Deletar visita">Deletar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/novaVisita" title="Adicionar nova visita">Adicionar Nova Visita</a><!-- Link para o formulário de nova visita -->
+</body>
+</html>

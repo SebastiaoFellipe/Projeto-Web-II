@@ -1,11 +1,18 @@
 package com.bti.projetoweb2.animais.entities;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "habitats")
@@ -20,8 +27,12 @@ public class Habitat {
     @NotBlank(message = "O tipo de ambiente é obrigatório.")
     private String tipoAmbiente;
 
-    @NotBlank(message = "A temperatura é obrigatória.")
+    @NotNull(message = "A temperatura é obrigatória.")
     private double temperatura;
+
+    @OneToMany(mappedBy = "habitat", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Animal> animals;
 
     public Habitat() {}
 
@@ -61,6 +72,14 @@ public class Habitat {
 
     public void setTemperatura(double temperatura) {
         this.temperatura = temperatura;
+    }
+
+    public List<Animal> getAnimals() {
+        return animals;
+    }
+
+    public void setAnimals(List<Animal> animals) {
+        this.animals = animals;
     }
 
     

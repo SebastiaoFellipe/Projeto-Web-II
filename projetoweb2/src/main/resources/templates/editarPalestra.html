@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Palestra</title>
+</head>
+<body>
+
+<h1>Editar Palestra</h1>
+
+<form th:action="@{/palestras/atualizar}" th:object="${palestra}" method="post">
+    <input type="hidden" th:field="*{id}">
+
+    <div>
+        <label>Tema:</label>
+        <input type="text" th:field="*{tema}" required>
+    </div>
+
+    <div>
+        <label>Data:</label>
+        <input type="date" th:field="*{data}" required>
+    </div>
+
+    <div>
+        <label>Hora:</label>
+        <input type="time" th:field="*{horario}">
+    </div>
+
+    <div>
+        <label>Local:</label>
+        <input type="text" th:field="*{local}">
+    </div>
+
+    <div>
+        <label>Palestrante:</label>
+        <input type="text" th:field="*{palestrante}">
+    </div>
+
+    <div>
+        <label>Formação do Palestrante:</label>
+        <input type="text" th:field="*{formacaoPalestrante}">
+    </div>
+
+    <div>
+        <label>Público Alvo:</label>
+        <input type="text" th:field="*{publicoAlvo}">
+    </div>
+
+    <br>
+    <button type="submit">Atualizar</button>
+</form>
+
+<br>
+<a th:href="@{/palestras}">Voltar</a>
+
+</body>
+</html>

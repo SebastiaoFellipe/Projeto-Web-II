@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Novo Funcionário</title>
+</head>
+<body>
+  <h1>Novo Funcionário</h1>
+
+  <!-- Mensagem de erro -->
+  <div th:if="${erro}" style="color:red; font-weight:bold;">
+      <p th:text="${erro}"></p>
+  </div>
+
+  <form th:action="@{/funcionarios/salvar}" th:object="${funcionario}" method="post">
+    
+    <label>CPF:</label>
+    <input type="text" th:field="*{cpf}" required><br>
+
+    <label>Cargo:</label>
+    <input type="text" th:field="*{cargo}" required><br>
+
+    <label>Setor:</label>
+    <input type="text" th:field="*{setor}" required><br>
+
+    <label>Tipo de Contrato:</label>
+    <input type="text" th:field="*{tipoContrato}"><br>
+
+    <label>Especialidade:</label>
+    <input type="text" th:field="*{especialidade}"><br>
+
+    <label>Telefone:</label>
+    <input type="text" th:field="*{telefone}"><br>
+
+    <label>Data de Admissão:</label>
+    <input type="date" th:field="*{dataAdmissao}"><br>
+    
+    <label>Usuário:</label>
+    <select th:field="*{usuarioId}" required>
+      <option value="">Selecione...</option>
+      <option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u.nome}"></option>
+    </select>
+    
+    <br><br>
+
+    <button type="submit">Salvar</button>
+    <a th:href="@{/funcionarios}">Cancelar</a>
+  </form>
+</body>
+</html>
+

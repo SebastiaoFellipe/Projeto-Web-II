@@ -18,4 +18,8 @@ public class HabitatService {
     public List<Habitat> listarTodos() {
         return habitatRepository.findAll();
     }
+
+    public Habitat buscarPorId(Long id) {
+        return habitatRepository.findById(id).orElse(null);
+    }
 }

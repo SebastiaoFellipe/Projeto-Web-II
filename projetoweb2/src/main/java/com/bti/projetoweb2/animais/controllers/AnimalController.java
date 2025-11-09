@@ -2,8 +2,13 @@ package com.bti.projetoweb2.animais.controllers;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +18,7 @@ import com.bti.projetoweb2.animais.services.AnimalService;
 @RestController
 @RequestMapping("/api/animais")
 public class AnimalController {
+    @Autowired
     private final AnimalService animalService;
 
     public AnimalController(AnimalService animalService) {
@@ -52,5 +58,20 @@ public class AnimalController {
     @GetMapping("/familia/{familia}")//http://localhost:8080/api/animais/familia/Callichthyidae
     public List<Animal> buscarPorFamilia(@PathVariable String familia) {
         return animalService.buscarPorFamilia(familia);
+    }
+
+    @PostMapping //http://localhost:8080/api/animais
+    public Animal salvar(@RequestBody Animal animal) {
+        return animalService.salvar(animal);
+    }
+
+    @PutMapping("/{id}")//http://localhost:8080/api/animais/1
+    public Animal atualizar(@PathVariable Long id, @RequestBody Animal animalAtualizado) {
+        return animalService.atualizar(id, animalAtualizado);
+    }
+
+    @DeleteMapping("/{id}")//http://localhost:8080/api/animais/1
+    public void deletar(@PathVariable Long id) {
+        animalService.deletar(id);
     }
 }

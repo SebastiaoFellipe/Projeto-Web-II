@@ -1,7 +1,12 @@
 package com.bti.projetoweb2.animais.entities;
 
 import java.util.Date;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,8 +15,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "animais")
@@ -20,8 +29,13 @@ public class Animal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Reabilitacao> reabilitacaos;
+
     @ManyToOne
     @JoinColumn(name = "habitat_id")
+    @JsonBackReference
     private Habitat habitat;
 
     @NotBlank(message = "O nome é obrigatório.")
@@ -38,15 +52,15 @@ public class Animal {
     @NotBlank(message = "A especie é obrigatória.")
     private String especie;
 
-    @NotBlank(message = "A classificação é obrigatória.")
-    @Enumerated(EnumType.STRING)
-    private Classificacao classificacao;
-
     public enum Classificacao { 
         AMEACADO, 
         NAO_AMEACADO, 
         EXTINTO
     }
+
+    @NotNull(message = "A classificação é obrigatória.")
+    @Enumerated(EnumType.STRING)
+    private Classificacao classificacao;
 
     @NotBlank(message = "A dieta é obrigatória.")
     private String dieta;
@@ -54,11 +68,12 @@ public class Animal {
     @NotBlank(message = "O status de saúde é obrigatório.")
     private String statusSaude;
 
-    @NotBlank(message = "A data de entrada é obrigatória.")
+    @NotNull
+    @Temporal(TemporalType.DATE)
     private Date dataEntrada;
 
-    @NotBlank(message = "A idade é obrigatória.")
-    private int idade;
+    @NotNull(message = "A idade é obrigatória.")
+    private Integer idade;
 
     public Animal() {}
 

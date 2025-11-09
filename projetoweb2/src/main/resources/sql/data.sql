@@ -17,9 +17,17 @@ INSERT INTO habitats (descricao, tipo_ambiente, temperatura) VALUES
 ('Terrário de répteis', 'Terrestre', 30.0);
 
 INSERT INTO animais (habitat_id, nome, nome_cientifico, familia, genero, especie, classificacao, dieta, status_saude, data_entrada, idade) VALUES
-(1, 'Peixe Betta', 'Betta splendens', 'Osphronemidae', 'Betta', 'splendens', 'NAO_AMEACADO', 'Onívoro', 'Saudável', '2025-10-01', 1),
-(2, 'Papagaio Arara', 'Ara macao', 'Psittacidae', 'Ara', 'macao', 'AMEACADO', 'Frugívoro', 'Saudável', '2025-09-15', 3),
-(3, 'Jiboia', 'Boa constrictor', 'Boidae', 'Boa', 'constrictor', 'NAO_AMEACADO', 'Carnívoro', 'Doente', '2025-10-10', 5);
+(1, 'Peixe Betta', 'Betta splendens', 'Osphronemidae', 'Betta', 'peixe', 'NAO_AMEACADO', 'Onívoro', 'Saudável', '2025-10-01', 1),
+(2, 'Papagaio Arara', 'Ara macao', 'Psittacidae', 'Ara', 'ave', 'AMEACADO', 'Frugívoro', 'Saudável', '2025-09-15', 3),
+(3, 'Jiboia', 'Boa constrictor', 'Boidae', 'Boa', 'réptil', 'NAO_AMEACADO', 'Carnívoro', 'Doente', '2025-10-10', 5);
+(1, 'Tetra Neon', 'Paracheirodon innesi', 'Characidae', 'Paracheirodon', 'peixe', 'NAO_AMEACADO', 'Onívoro', 'Saudável', '2025-10-12', 1),
+(1, 'Corydora', 'Corydoras paleatus', 'Callichthyidae', 'Corydoras', 'peixe', 'NAO_AMEACADO', 'Onívoro', 'Saudável', '2025-10-05', 2),
+(2, 'Canário', 'Serinus canaria', 'Fringillidae', 'Serinus', 'ave', 'NAO_AMEACADO', 'Frugívoro', 'Doente', '2025-10-08', 1),
+(2, 'Arara Azul', 'Anodorhynchus hyacinthinus', 'Psittacidae', 'Anodorhynchus', 'ave', 'AMEACADO', 'Frugívoro', 'Saudável', '2025-09-25', 4),
+(3, 'Iguana Verde', 'Iguana iguana', 'Iguanidae', 'Iguana', 'réptil', 'NAO_AMEACADO', 'Herbívoro', 'Saudável', '2025-10-03', 3),
+(3, 'Cascavel', 'Crotalus durissus', 'Viperidae', 'Crotalus', 'réptil', 'AMEACADO', 'Carnívoro', 'Doente', '2025-10-09', 6),
+(1, 'Peixe Oscar', 'Astronotus ocellatus', 'Cichlidae', 'Astronotus', 'peixe', 'NAO_AMEACADO', 'Carnívoro', 'Saudável', '2025-10-02', 2);
+
 
 INSERT INTO reabilitacoes (animal_id, motivo, tratamento, data_entrada, data_saida, status, observacoes) VALUES
 (3, 'Doença respiratória', 'Nebulização diária e antibióticos', '2025-10-10', NULL, 'Em tratamento', 'Animal ainda em observação, necessita acompanhamento diário.'),

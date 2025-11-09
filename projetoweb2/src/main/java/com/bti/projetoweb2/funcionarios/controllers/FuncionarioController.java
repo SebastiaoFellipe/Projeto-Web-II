@@ -11,11 +11,11 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/funcionarios")
-public class FuncionarioWebController {
+public class FuncionarioController {
 
     private final FuncionarioService funcionarioService;
 
-    public FuncionarioWebController(FuncionarioService funcionarioService) {
+    public FuncionarioController(FuncionarioService funcionarioService) {
         this.funcionarioService = funcionarioService;
     }
 

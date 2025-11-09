@@ -3,9 +3,9 @@ package com.bti.projetoweb2.config;
 import com.bti.projetoweb2.funcionarios.entities.Funcionario;
 import com.bti.projetoweb2.funcionarios.entities.TipoVinculo;
 import com.bti.projetoweb2.funcionarios.repositories.FuncionarioRepository;
-import com.bti.projetoweb2.professor.entities.Professor;
-import com.bti.projetoweb2.professor.entities.NivelEnsino;
-import com.bti.projetoweb2.professor.repositories.ProfessorRepository;
+import com.bti.projetoweb2.professores.entities.NivelAcademico;
+import com.bti.projetoweb2.professores.entities.Professor;
+import com.bti.projetoweb2.professores.repositories.ProfessorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -53,14 +53,14 @@ public class DatabaseSeeder implements CommandLineRunner {
                     "Mariana Filho",
                     "99988877766",
                     "Biologia Marinha",
-                    NivelEnsino.SUPERIOR
+                    NivelAcademico.GRADUAÇÃO
             );
 
             Professor p2 = new Professor(
                     "Carlos Mendes",
                     "33322211100",
                     "Epedemiologia",
-                    NivelEnsino.DOUTORADO
+                    NivelAcademico.DOUTORADO
             );
 
             professorRepository.save(p1);

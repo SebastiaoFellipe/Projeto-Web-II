@@ -1,11 +1,12 @@
-package com.bti.projetoweb2.professor.services;
+package com.bti.projetoweb2.professores.services;
 
 import org.springframework.stereotype.Service;
+
+import com.bti.projetoweb2.professores.entities.Professor;
+import com.bti.projetoweb2.professores.repositories.ProfessorRepository;
+
 import java.util.List;
 import java.util.Optional;
-
-import com.bti.projetoweb2.professor.entities.Professor;
-import com.bti.projetoweb2.professor.repositories.ProfessorRepository;
 
 @Service
 public class ProfessorService {
@@ -33,8 +34,8 @@ public class ProfessorService {
                 .map(professor -> {
                     professor.setNome(professorAtualizado.getNome());
                     professor.setCpf(professorAtualizado.getCpf());
-                    professor.setDisciplina(professorAtualizado.getDisciplina());
-                    professor.setNivelEnsino(professorAtualizado.getNivelEnsino());
+                    professor.setAreaAplicada(professorAtualizado.getAreaAplicada());
+                    professor.setNivelAcademico(professorAtualizado.getNivelAcademico());
                     return professorRepository.save(professor);
                 })
                 .orElseThrow(() -> new RuntimeException("Professor não encontrado com ID: " + id));

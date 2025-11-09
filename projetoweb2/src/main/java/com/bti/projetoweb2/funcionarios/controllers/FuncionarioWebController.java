@@ -27,7 +27,7 @@ public class FuncionarioWebController {
     }
 
     
-    @GetMapping("/cadastro")
+    @GetMapping("/cadastrar")
     public String showCreateForm(Model model) {
         model.addAttribute("funcionario", new Funcionario());
         model.addAttribute("isEdit", false);

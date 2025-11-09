@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciamento de Funcionários</title>
+    <title>Gerenciamento de Professores</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,8 +12,8 @@
                 extend: {
                     colors: {
                         'aquarium-primary': '#81C3B7', 
-                        'aquarium-dark': '#73B0A5',    
-                        'aquarium-light': '#D8F1F5',  
+                        'aquarium-dark': '#73B0A5',     
+                        'aquarium-light': '#D8F1F5',    
                     },
                 },
             },
@@ -29,13 +29,13 @@
 <body class="min-h-screen p-8">
     <div class="max-w-6xl mx-auto bg-white p-6 md:p-10 rounded-xl shadow-2xl">
         <h1 class="text-3xl font-bold text-gray-800 mb-6 border-b-2 pb-2">
-            Gestão de Funcionários
+            Gestão de Professores
         </h1>
 
         <div class="mb-6 flex justify-end">
-            <a th:href="@{/funcionarios/criar}"
+            <a th:href="@{/professores/cadastrar}"
                class="bg-aquarium-primary hover:bg-aquarium-dark text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-[1.02]">
-                + Adicionar Novo Funcionário
+                + Adicionar Novo Professor
             </a>
         </div>
 
@@ -46,36 +46,37 @@
                         <th class="py-3 px-4 text-left font-semibold uppercase text-sm">ID</th>
                         <th class="py-3 px-4 text-left font-semibold uppercase text-sm">Nome</th>
                         <th class="py-3 px-4 text-left font-semibold uppercase text-sm">CPF</th>
-                        <th class="py-3 px-4 text-left font-semibold uppercase text-sm">Cargo</th>
-                        <th class="py-3 px-4 text-left font-semibold uppercase text-sm">Tipo Vínculo</th>
+                        <th class="py-3 px-4 text-left font-semibold uppercase text-sm">Área de Aplicação</th>
+                        <th class="py-3 px-4 text-left font-semibold uppercase text-sm">Nível Acadêmico</th>
                         <th class="py-3 px-4 text-center font-semibold uppercase text-sm">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    <tr th:each="funcionario : ${funcionarios}" class="hover:bg-aquarium-light transition duration-150">
-                        <td th:text="${funcionario.id}" class="py-3 px-4 text-sm text-gray-700"></td>
-                        <td th:text="${funcionario.nome}" class="py-3 px-4 text-sm text-gray-700 font-medium"></td>
+                    <tr th:each="professor : ${professores}" class="hover:bg-aquarium-light transition duration-150">
+                        <td th:text="${professor.id}" class="py-3 px-4 text-sm text-gray-700"></td>
+                        <td th:text="${professor.nome}" class="py-3 px-4 text-sm text-gray-700 font-medium"></td>
                         
-                        <td th:text="${funcionario.cpf}" class="py-3 px-4 text-sm text-gray-700"></td>
+                        <td th:text="${professor.cpf}" class="py-3 px-4 text-sm text-gray-700"></td>
                         
-                        <td th:text="${funcionario.cargo}" class="py-3 px-4 text-sm text-gray-700"></td>
+                        <td th:text="${professor.disciplina}" class="py-3 px-4 text-sm text-gray-700"></td>
                         
-                        <td th:text="${funcionario.tipoVinculo}" class="py-3 px-4 text-sm text-gray-700"></td>
+                        <td th:text="${professor.nivelEnsino}" class="py-3 px-4 text-sm text-gray-700"></td>
 
                         <td class="py-3 px-4 text-center space-x-2">
-                            <a th:href="@{/funcionarios/editar/{id}(id=${funcionario.id})}"
+                            <a th:href="@{/professores/editar/{id}(id=${professor.id})}"
                                class="text-blue-600 hover:text-blue-800 font-medium transition duration-150">
                                 Editar
                             </a>
-                            <a th:href="@{/funcionarios/deletar/{id}(id=${funcionario.id})}"
-                               onclick="return confirm('Tem certeza que deseja deletar este funcionário?')"
+
+                            <a th:href="@{/professores/deletar/{id}(id=${professor.id})}"
+                               onclick="return confirm('Tem certeza que deseja deletar este professor?')"
                                class="text-red-600 hover:text-red-800 font-medium transition duration-150 ml-2">
                                 Deletar
                             </a>
                         </td>
                     </tr>
-                    <tr th:if="${funcionarios.empty}">
-                        <td colspan="6" class="py-4 text-center text-gray-500 italic">Nenhum funcionário cadastrado.</td>
+                    <tr th:if="${professores.empty}">
+                        <td colspan="6" class="py-4 text-center text-gray-500 italic">Nenhum professor cadastrado.</td>
                     </tr>
                 </tbody>
             </table>

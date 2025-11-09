@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Palestras</title>
+</head>
+<body>
+  <h1>Lista de Palestras</h1>
+
+  <a th:href="@{/palestras/nova}">Nova Palestra</a>
+
+  <form th:action="@{/palestras/buscar}" method="get">
+    <input type="text" name="tema" placeholder="Buscar por tema" th:value="${nomeBusca}">
+    <button type="submit">Buscar</button>
+    <a th:if="${isSearch}" th:href="@{/palestras}">Limpar busca</a>
+  </form>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tema</th>
+        <th>Data</th>
+        <th>Horário</th>
+        <th>Local</th>
+        <th>Palestrante</th>
+        <th>Formação</th>
+        <th>Público-Alvo</th>
+        <th>Funcionário Responsável</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="p : ${palestras}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.tema}"></td>
+        <td th:text="${p.data}"></td>
+        <td th:text="${p.horario}"></td>
+        <td th:text="${p.local}"></td>
+        <td th:text="${p.palestrante}"></td>
+        <td th:text="${p.formacaoPalestrante}"></td>
+        <td th:text="${p.publicoAlvo}"></td>
+        <td th:text="${p.funcionario != null ? p.funcionario.usuario.nome : '—'}"></td>
+        <td>
+          <a th:href="@{'/palestras/editar/' + ${p.id}}">Editar</a>
+          <a th:href="@{'/palestras/deletar/' + ${p.id}}"
+             onclick="return confirm('Deseja realmente excluir esta palestra?');">Excluir</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div th:if="${paginaPalestras.totalPages > 1}">
+    <span th:each="i : ${#numbers.sequence(0, paginaPalestras.totalPages - 1)}">
+      <a th:href="@{${isSearch} ? '/palestras/buscar?(tema=' + ${nomeBusca} + ',page=' + ${i} + ')' : '/palestras?(page=' + ${i} + ')'}"
+         th:text="${i + 1}"></a>
+    </span>
+  </div>
+</body>
+</html>
+
+

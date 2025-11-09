@@ -2,6 +2,7 @@ package com.bti.projetoweb2.animais.entities;
 
 import java.util.Date;
 
+import com.bti.projetoweb2.funcionarios.entities.Funcionario;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
@@ -20,6 +21,10 @@ public class Reabilitacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id", nullable = false)
+    private Funcionario funcionario;
 
     @ManyToOne
     @JoinColumn(name = "animal_id", nullable = false)
@@ -43,7 +48,7 @@ public class Reabilitacao {
 
     public Reabilitacao() {}
 
-    public Reabilitacao(Animal animal, String motivo, String tratamento, Date dataEntrada, Date dataSaida, String status, String observacoes) {
+    public Reabilitacao(Animal animal, String motivo, String tratamento, Date dataEntrada, Date dataSaida, String status, String observacoes, Funcionario funcionario) {
         this.animal = animal;
         this.motivo = motivo;
         this.tratamento = tratamento;
@@ -51,6 +56,15 @@ public class Reabilitacao {
         this.dataSaida = dataSaida;
         this.status = status;
         this.observacoes = observacoes;
+        this.funcionario = funcionario;
+    }
+    
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 
     public Long getId() {

@@ -41,13 +41,15 @@ CREATE TABLE animais (
 CREATE TABLE reabilitacoes (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     animal_id BIGINT NOT NULL,
+    funcionario_id BIGINT NOT NULL,
     motivo VARCHAR(255) NOT NULL,
     tratamento VARCHAR(255),
     data_entrada DATE NOT NULL,
     data_saida DATE,
-    status VARCHAR(100) NOT NULL,
-    observacoes TEXT,
-    FOREIGN KEY (animal_id) REFERENCES animais(id)
+    status VARCHAR(255) NOT NULL,
+    observacoes VARCHAR(255),
+    CONSTRAINT fk_reabilitacao_animal FOREIGN KEY (animal_id) REFERENCES animais(id),
+    CONSTRAINT fk_reabilitacao_funcionario FOREIGN KEY (funcionario_id) REFERENCES funcionarios(id)
 );
 
 CREATE TABLE candidatos (

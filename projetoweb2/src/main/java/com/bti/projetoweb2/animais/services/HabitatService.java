@@ -22,4 +22,8 @@ public class HabitatService {
     public Habitat buscarPorId(Long id) {
         return habitatRepository.findById(id).orElse(null);
     }
+
+    public Habitat salvar(Habitat habitat) {
+        return habitatRepository.save(habitat);
+    }
 }

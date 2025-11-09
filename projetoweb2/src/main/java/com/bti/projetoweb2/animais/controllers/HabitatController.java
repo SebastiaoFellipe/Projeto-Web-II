@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,5 +31,10 @@ public class HabitatController {
     @GetMapping("/{id}")//http://localhost:8080/api/habitats/1
     public Habitat buscarPorId(@PathVariable Long id) {
         return habitatService.buscarPorId(id);
+    }
+
+    @PostMapping//http://localhost:8080/api/habitats
+    public Habitat salvar(@RequestBody Habitat habitat) {
+        return habitatService.salvar(habitat);
     }
 }

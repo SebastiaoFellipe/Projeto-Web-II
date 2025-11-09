@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Palestras</title>
+</head>
+<body>
+    <h1>Lista de Palestras</h1>
+
+    <!-- Campo de busca -->
+    <form th:action="@{/palestras/buscar}" method="get">
+        <input type="text" name="tema" placeholder="Buscar por tema"
+               th:value="${nomeBusca != null ? nomeBusca : ''}">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <br>
+    <a th:href="@{/palestras/nova}">Cadastrar Nova Palestra</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tema</th>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Local</th>
+                <th>Palestrante</th>
+                <th>Formação</th>
+                <th>Público Alvo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="p : ${paginaPalestras.content}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.tema}"></td>
+                <td th:text="${p.data}"></td>
+                <td th:text="${p.hora}"></td>
+                <td th:text="${p.local}"></td>
+                <td th:text="${p.palestrante}"></td>
+                <td th:text="${p.formacaoPalestrante}"></td>
+                <td th:text="${p.publicoAlvo}"></td>
+                <td>
+                    <a th:href="@{/palestras/editar/{id}(id=${p.id})}">Editar</a> |
+                    <a th:href="@{/palestras/deletar/{id}(id=${p.id})}"
+                       onclick="return confirm('Deseja excluir esta palestra?');">Excluir</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Paginação -->
+    <div th:if="${paginaPalestras.totalPages > 1}" style="margin-top: 20px;">
+        <span th:text="|Página ${paginaPalestras.number + 1} de ${paginaPalestras.totalPages}|"></span>
+
+        <ul style="list-style: none; padding: 0;">
+            <li style="display: inline; margin-right: 5px;">
+                <a th:if="${paginaPalestras.hasPrevious()}"
+                   th:href="@{/palestras(page=${paginaPalestras.number - 1})}">Anterior</a>
+                <span th:unless="${paginaPalestras.hasPrevious()}" style="color: gray;">Anterior</span>
+            </li>
+
+            <li style="display: inline; margin-right: 5px;"
+                th:each="i : ${#numbers.sequence(0, paginaPalestras.totalPages - 1)}">
+                <a th:href="@{/palestras(page=${i})}"
+                   th:text="${i + 1}"
+                   th:style="${i == paginaPalestras.number ? 'font-weight:bold; text-decoration:underline;' : ''}"></a>
+            </li>
+
+            <li style="display: inline; margin-left: 5px;">
+                <a th:if="${paginaPalestras.hasNext()}"
+                   th:href="@{/palestras(page=${paginaPalestras.number + 1})}">Próxima</a>
+                <span th:unless="${paginaPalestras.hasNext()}" style="color: gray;">Próxima</span>
+            </li>
+        </ul>
+    </div>
+
+</body>
+</html>

@@ -2,6 +2,8 @@ package com.bti.projetoweb2.animais.entities;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "reabilitacoes")
@@ -19,8 +22,8 @@ public class Reabilitacao {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "animal_id")
-    @NotBlank(message = "O animal é obrigatório.")
+    @JoinColumn(name = "animal_id", nullable = false)
+    @JsonBackReference
     private Animal animal;
 
     @NotBlank(message = "O motivo é obrigatório.")
@@ -28,14 +31,13 @@ public class Reabilitacao {
 
     private String tratamento;
 
-    @NotBlank(message = "A data de entrada é obrigatória.")
+    @NotNull(message = "A data de entrada é obrigatória.")
     private Date dataEntrada;
 
     private Date dataSaida;
 
     @NotBlank(message = "O status é obrigatório.")
     private String status;
-
 
     private String observacoes;
 

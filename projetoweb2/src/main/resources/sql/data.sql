@@ -1,8 +1,15 @@
-INSERT INTO funcionarios (nome, cpf, cargo, setor, tipo_vinculo, especialidade)
+INSERT INTO funcionarios (id_professor, nome, cpf, cargo, tipo_vinculo)
 VALUES
-('Ana Silva', '12345678901', 'Gerente de Projetos', 'TI', 'CLT', 'Gestão de Software'),
-('Bruno Costa', '98765432109', 'Desenvolvedor Pleno', 'TI', 'PJ', 'Backend Java'),
-('Carla Dias', '11223344556', 'Assistente Administrativo', 'RH', 'ESTAGIARIO', 'Rotinas de Pessoal');
+('Ana Silva', '12345678901', 'Agente Contábil', 'FIXO'),
+('Bruno Costa', '98765432109', 'Analista de Aves', 'TEMPORARIO'),
+('Carla Dias', '11223344556', 'Assistente Administrativo', 'ESTAGIARIO');
+('Diego Souza', '66554433221', 'Técnico de Reabilitação', 'FIXO');
+('Elaine Rocha', '77889966554', 'Bióloga', 'TEMPORARIO');
+
+INSERT INTO professores (id_professor, nome, cpf, area_aplicada, nivel_academico) VALUES
+('Mariana Filho', '99988877766', 'Biologia Marinha', 'GRADUACAO'),
+('Lucas Almeida', '55566677788', 'Ecologia', 'MESTRADO'),
+('Fernanda Gomes', '44433322211', 'Zoologia', 'DOUTORADO');
 
 INSERT INTO habitats (descricao, tipo_ambiente, temperatura) VALUES
 ('Aquário de água doce com plantas', 'Aquático', 24.5),

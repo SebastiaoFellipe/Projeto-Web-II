@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -29,7 +30,8 @@ public class Animal {
     private Long id;
 
     @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reabilitacao> reabilitacoes;
+    @JsonManagedReference
+    private List<Reabilitacao> reabilitacaos;
 
     @ManyToOne
     @JoinColumn(name = "habitat_id")

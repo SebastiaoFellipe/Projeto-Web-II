@@ -2,6 +2,8 @@ package com.bti.projetoweb2.animais.entities;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +22,7 @@ public class Reabilitacao {
 
     @ManyToOne
     @JoinColumn(name = "animal_id")
-    @NotBlank(message = "O animal é obrigatório.")
+    @JsonBackReference
     private Animal animal;
 
     @NotBlank(message = "O motivo é obrigatório.")

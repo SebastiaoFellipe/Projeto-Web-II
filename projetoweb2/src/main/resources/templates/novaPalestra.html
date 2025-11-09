@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Nova Palestra</title>
+</head>
+<body>
+
+<h1>Cadastrar Nova Palestra</h1>
+
+<form th:action="@{/palestras}" th:object="${palestra}" method="post">
+
+    <div>
+        <label>Tema:</label>
+        <input type="text" th:field="*{tema}" required>
+    </div>
+
+    <div>
+        <label>Data:</label>
+        <!-- Correto: type="date" -->
+        <input type="date" th:field="*{data}" required>
+    </div>
+
+    <div>
+        <label>Horário:</label>
+        <!-- Certifique-se que no model o nome é 'hora' ou 'horario' -->
+        <input type="time" th:field="*{horario}">
+        <!-- Se seu atributo for horario, use: th:field="*{horario}" -->
+    </div>
+
+    <div>
+        <label>Local:</label>
+        <input type="text" th:field="*{local}">
+    </div>
+
+    <div>
+        <label>Palestrante:</label>
+        <input type="text" th:field="*{palestrante}">
+    </div>
+
+    <div>
+        <label>Formação do Palestrante:</label>
+        <input type="text" th:field="*{formacaoPalestrante}">
+    </div>
+
+    <div>
+        <label>Público Alvo:</label>
+        <input type="text" th:field="*{publicoAlvo}">
+    </div>
+	
+	<label for="funcionario">Funcionário:</label>
+	<select name="funcionarioId" id="funcionario">
+	    <option value="">-- Selecione --</option>
+	    <th:block th:each="func : ${funcionarios}">
+	        <option th:value="${func.id}" th:text="${func.usuario.nome}"></option>
+	    </th:block>
+	</select>
+
+
+    <br>
+    <button type="submit">Salvar</button>
+</form>
+
+<br>
+<a th:href="@{/palestras}">Voltar</a>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${isEdit ? 'Editar Funcionário' : 'Novo Funcionário'}"></title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'aquarium-primary': '#81C3B7', 
+                        'aquarium-dark': '#73B0A5',    
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-8">
+    <div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-2xl">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 border-b-2 pb-2"
+            th:text="${isEdit ? 'Editar Funcionário' : 'Cadastrar Novo Funcionário'}">
+            Formulário de Funcionário
+        </h1>
+
+        <form th:action="@{/funcionarios/salvar}" th:object="${funcionario}" method="post" class="space-y-6">
+
+            <input type="hidden" th:field="*{id}" />
+
+            <div>
+                <label for="nome" class="block text-sm font-medium text-gray-700">Nome:</label>
+                <p th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="text-red-500 text-xs italic"></p>
+                <input type="text" id="nome" th:field="*{nome}" required
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-aquarium-primary focus:border-aquarium-primary sm:text-sm">
+            </div>
+
+            <div>
+                <label for="cpf" class="block text-sm font-medium text-gray-700">CPF:</label>
+                <p th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}" class="text-red-500 text-xs italic"></p>
+                <input type="text" id="cpf" th:field="*{cpf}" required
+                       placeholder="Ex: 000.000.000-00"
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-aquarium-primary focus:border-aquarium-primary sm:text-sm">
+            </div>
+
+            <div>
+                <label for="cargo" class="block text-sm font-medium text-gray-700">Cargo:</label>
+                <p th:if="${#fields.hasErrors('cargo')}" th:errors="*{cargo}" class="text-red-500 text-xs italic"></p>
+                <input type="text" id="cargo" th:field="*{cargo}" required
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-aquarium-primary focus:border-aquarium-primary sm:text-sm">
+            </div>
+
+            <div>
+                <label for="tipoVinculo" class="block text-sm font-medium text-gray-700">Tipo de Vínculo:</label>
+                <p th:if="${#fields.hasErrors('tipoVinculo')}" th:errors="*{tipoVinculo}" class="text-red-500 text-xs italic"></p>
+                <select id="tipoVinculo" th:field="*{tipoVinculo}" required
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-aquarium-primary focus:border-aquarium-primary sm:text-sm">
+                    <option value="" disabled selected>Selecione o Tipo de Vínculo</option>
+                    <option th:value="FIXO" th:text="Fixo">Fixo</option>
+                    <option th:value="TEMPORARIO" th:text="Temporário">Temporário</option>
+                    <option th:value="ESTAGIARIO" th:text="Estagiário">Estagiário</option>
+                </select>
+            </div>
+
+            <div class="flex justify-between pt-4">
+                <a th:href="@{/web/funcionarios}"
+                   class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-300">
+                    Voltar
+                </a>
+
+                <button type="submit"
+                        class="bg-aquarium-primary hover:bg-aquarium-dark text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105">
+                    <span th:text="${isEdit ? 'Salvar Alterações' : 'Cadastrar'}">Salvar</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

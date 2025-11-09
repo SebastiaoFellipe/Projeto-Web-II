@@ -3,6 +3,8 @@ package com.bti.projetoweb2.animais.entities;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,6 +33,7 @@ public class Animal {
 
     @ManyToOne
     @JoinColumn(name = "habitat_id")
+    @JsonBackReference
     private Habitat habitat;
 
     @NotBlank(message = "O nome é obrigatório.")

@@ -37,4 +37,8 @@ public class HabitatService {
             })
             .orElse(null);
     }
+
+    public void deletar(Long id) {
+        habitatRepository.deleteById(id);
+    }
 }

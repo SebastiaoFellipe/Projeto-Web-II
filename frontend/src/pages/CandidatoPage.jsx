@@ -4,44 +4,27 @@ import Modal from '../components/Modal';
 import CrudForm from '../components/CrudForm';
 
 // Configuração da entidade
-const API_ENDPOINT = '/animais';
-const ENTITY_NAME = 'Animal';
+const API_ENDPOINT = '/candidatos';
+const ENTITY_NAME = 'Candidato';
 
 const fields = [
   { name: 'nome', label: 'Nome' },
-  { name: 'nomeCientifico', label: 'Nome Científico' },
-  { name: 'familia', label: 'Família' },
-  { name: 'genero', label: 'Gênero' },
-  { name: 'especie', label: 'Espécie' },
-  { 
-    name: 'classificacao', 
-    label: 'Classificação',
-    type: 'select',
-    options: [
-        { value: 'NAO_AMEACADO', label: 'Não Ameaçado' },
-        { value: 'AMEACADO', label: 'Ameaçado' },
-        { value: 'EXTINTO', label: 'Extinto' }
-    ]
-  },
-  { name: 'dieta', label: 'Dieta' },
-  { name: 'statusSaude', label: 'Status de Saúde' },
-  { name: 'dataEntrada', label: 'Data de Entrada', type: 'date' },
-  { name: 'idade', label: 'Idade', type: 'number' },
-  // { name: 'habitat', label: 'Habitat (ID)', type: 'number' }, // Habitats são objetos complexos, melhor simplificar por agora
+  { name: 'cpf', label: 'CPF' },
+  { name: 'formacaoAcademica', label: 'Formação Acadêmica' },
+  { name: 'email', label: 'Email', type: 'email' },
 ];
 
 const tableColumns = [
   { key: 'id', label: 'ID' },
   { key: 'nome', label: 'Nome' },
-  { key: 'especie', label: 'Espécie' },
-  { key: 'classificacao', label: 'Classificação' },
-  { key: 'statusSaude', label: 'Saúde' },
+  { key: 'email', label: 'Email' },
+  { key: 'formacaoAcademica', label: 'Formação' },
 ];
 
-const emptyForm = { nome: '', nomeCientifico: '', familia: '', genero: '', especie: '', classificacao: 'NAO_AMEACADO', dieta: '', statusSaude: '', dataEntrada: '', idade: 0 };
+const emptyForm = { nome: '', cpf: '', formacaoAcademica: '', email: '' };
 
 // Componente da Página
-export default function AnimalPage() {
+export default function CandidatoPage() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -90,12 +73,7 @@ export default function AnimalPage() {
   };
 
   const handleEdit = (item) => {
-    // Formata a data para o input type="date" (YYYY-MM-DD)
-    const formattedItem = {
-      ...item,
-      dataEntrada: item.dataEntrada ? new Date(item.dataEntrada).toISOString().split('T')[0] : ''
-    };
-    setCurrentItem(formattedItem);
+    setCurrentItem(item);
     setIsEditing(true);
     setIsModalOpen(true);
   };
@@ -110,7 +88,7 @@ export default function AnimalPage() {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-4xl font-bold">Gerenciar {ENTITY_NAME}is</h1>
+        <h1 className="text-4xl font-bold">Gerenciar {ENTITY_NAME}s</h1>
         <button onClick={handleCreate} className="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">
           Novo {ENTITY_NAME}
         </button>

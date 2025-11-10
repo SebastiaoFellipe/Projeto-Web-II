@@ -17,15 +17,12 @@
 
     <div>
         <label>Data:</label>
-        <!-- Correto: type="date" -->
         <input type="date" th:field="*{data}" required>
     </div>
 
     <div>
         <label>Horário:</label>
-        <!-- Certifique-se que no model o nome é 'hora' ou 'horario' -->
         <input type="time" th:field="*{horario}">
-        <!-- Se seu atributo for horario, use: th:field="*{horario}" -->
     </div>
 
     <div>
@@ -47,15 +44,16 @@
         <label>Público Alvo:</label>
         <input type="text" th:field="*{publicoAlvo}">
     </div>
-	
-	<label for="funcionario">Funcionário:</label>
-	<select name="funcionarioId" id="funcionario">
-	    <option value="">-- Selecione --</option>
-	    <th:block th:each="func : ${funcionarios}">
-	        <option th:value="${func.id}" th:text="${func.usuario.nome}"></option>
-	    </th:block>
-	</select>
 
+    <div>
+        <label>Funcionário Responsável:</label>
+        <select name="funcionarioId" th:field="*{funcionarioId}">
+            <option value="">-- Selecione --</option>
+            <th:block th:each="func : ${funcionarios}">
+                <option th:value="${func.id}" th:text="${func.nome}"></option>
+            </th:block>
+        </select>
+    </div>
 
     <br>
     <button type="submit">Salvar</button>

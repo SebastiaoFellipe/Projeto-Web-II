@@ -10,55 +10,22 @@
 <form th:action="@{/visitas/atualizar}" th:object="${visita}" method="post">
     <input type="hidden" th:field="*{id}">
 
-    <div>
-        <label>Nome:</label>
-        <input type="text" th:field="*{nome}" required>
-    </div>
+    <div><label>Nome:</label><input type="text" th:field="*{nome}" required></div>
+    <div><label>Data:</label><input type="date" th:field="*{data}" required></div>
+    <div><label>Hora:</label><input type="time" th:field="*{hora}"></div>
+    <div><label>Instituição:</label><input type="text" th:field="*{instituicao}"></div>
+    <div><label>Tipo da Instituição:</label><input type="text" th:field="*{tipoInstituicao}"></div>
+    <div><label>Professor Responsável:</label><input type="text" th:field="*{professorResponsavel}"></div>
+    <div><label>Quantidade de Alunos:</label><input type="number" th:field="*{qtdAlunos}" min="3" max="21"></div>
+    <div><label>Telefone:</label><input type="text" th:field="*{telefone}"></div>
 
-    <div>
-        <label>Data:</label>
-        <input type="date" th:field="*{data}" required>
-    </div>
-
-    <div>
-        <label>Hora:</label>
-        <input type="time" th:field="*{hora}">
-    </div>
-
-    <div>
-        <label>Instituição:</label>
-        <input type="text" th:field="*{instituicao}">
-    </div>
-
-    <div>
-        <label>Tipo da Instituição:</label>
-        <input type="text" th:field="*{tipoInstituicao}">
-    </div>
-
-    <div>
-        <label>Professor Responsável:</label>
-        <input type="text" th:field="*{professorResponsavel}">
-    </div>
-
-    <div>
-        <label>Quantidade de Alunos:</label>
-        <input type="number" th:field="*{qtdAlunos}" min="3" max="21">
-    </div>
-
-    <div>
-        <label>Telefone:</label>
-        <input type="text" th:field="*{telefone}">
-    </div>
-
-    <!-- Seleção de Funcionários -->
     <div>
         <label>Funcionários Responsáveis:</label>
         <select multiple name="funcionarioIds">
             <option th:each="func : ${funcionarios}"
                     th:value="${func.id}"
-                    th:text="${func.usuario != null ? func.usuario.nome : 'Sem usuário'}"
-                    th:selected="${visita.funcionarios.contains(func)}">
-            </option>
+                    th:text="${func.nome}"
+                    th:selected="${visita.funcionarios.contains(func)}"></option>
         </select>
         <small>Segure CTRL (ou CMD no Mac) para selecionar mais de um.</small>
     </div>
@@ -70,6 +37,3 @@
 <a th:href="@{/visitas}">Voltar</a>
 </body>
 </html>
-
-
-

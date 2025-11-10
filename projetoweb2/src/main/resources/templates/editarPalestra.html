@@ -22,7 +22,7 @@
     </div>
 
     <div>
-        <label>Hora:</label>
+        <label>Horário:</label>
         <input type="time" th:field="*{horario}">
     </div>
 
@@ -44,6 +44,18 @@
     <div>
         <label>Público Alvo:</label>
         <input type="text" th:field="*{publicoAlvo}">
+    </div>
+
+    <div>
+        <label>Funcionário Responsável:</label>
+        <select name="funcionarioId" th:field="*{funcionarioId}">
+            <option value="">-- Selecione --</option>
+            <th:block th:each="func : ${funcionarios}">
+                <option th:value="${func.id}" th:text="${func.nome}"
+                        th:selected="${palestra.funcionarioId != null} ? ${func.id} == ${palestra.funcionarioId} : false">
+                </option>
+            </th:block>
+        </select>
     </div>
 
     <br>

@@ -67,6 +67,14 @@ export default function AnimalPage() {
     } catch (err) { setError("Erro ao salvar: " + err.message); }
   };
 
+  // --- Função para formatar a data ---
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    date.setDate(date.getDate() + 1); 
+    return date.toLocaleDateString("pt-BR");
+  };
+
   if (loading) return <div className="container">Carregando...</div>;
 
   return (
@@ -80,22 +88,54 @@ export default function AnimalPage() {
 
       <div className="table-container">
         <table>
-          <thead><tr><th>ID</th><th>Nome</th><th>Espécie</th><th>Classificação</th><th>Saúde</th><th style={{ textAlign: "right" }}>Ações</th></tr></thead>
+          {/* ===== CABEÇALHO ATUALIZADO ===== */}
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Nome Científico</th>
+              <th>Família</th>
+              <th>Gênero</th>
+              <th>Espécie</th>
+              <th>Classificação</th>
+              <th>Dieta</th>
+              <th>Status de Saúde</th>
+              <th>Data de Entrada</th>
+              <th>Idade</th>
+              <th style={{ textAlign: "right" }}>Ações</th>
+            </tr>
+          </thead>
+          
+          {/* ===== CORPO DA TABELA ATUALIZADO ===== */}
           <tbody>
             {items.map((it) => (
               <tr key={it.id}>
                 <td>{it.id}</td>
                 <td>{it.nome}</td>
+                <td>{it.nomeCientifico}</td>
+                <td>{it.familia}</td>
+                <td>{it.genero}</td>
                 <td>{it.especie}</td>
                 <td>{it.classificacao}</td>
+                <td>{it.dieta}</td>
                 <td>{it.statusSaude}</td>
+                <td>{formatDate(it.dataEntrada)}</td> {/* Data formatada */}
+                <td>{it.idade}</td>
                 <td style={{ textAlign: "right" }}>
                   <button className="btn btn-secondary" onClick={() => handleEdit(it)} style={{ marginRight: 8 }}>Editar</button>
                   <button className="btn" onClick={() => handleDelete(it.id)} style={{ background: "#e03131", color: "#fff", border: "none" }}>Excluir</button>
                 </td>
               </tr>
             ))}
-            {items.length === 0 && <tr><td colSpan={6} style={{ padding: 16 }}>Nenhum registro.</td></tr>}
+            
+            {/* ===== COLSPAN ATUALIZADO ===== */}
+            {items.length === 0 && (
+              <tr>
+                <td colSpan={12} style={{ padding: 16 }}> {/* MUDADO DE 6 PARA 12 */}
+                  Nenhum registro.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

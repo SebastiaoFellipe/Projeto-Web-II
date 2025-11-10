@@ -8,9 +8,11 @@
   height: 100%;
   background: rgba(0,0,0,0.4);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   animation: fadeIn 0.25s ease-out forwards;
+  overflow-y: auto;
+  padding: 4rem 1rem;
 }
 
 .modal {
@@ -18,6 +20,8 @@
   padding: 2rem;
   border-radius: var(--radius);
   min-width: 350px;
+  max-width: 600px;
+  width: 90%;
   animation: slideUp 0.3s ease forwards;
 }
 

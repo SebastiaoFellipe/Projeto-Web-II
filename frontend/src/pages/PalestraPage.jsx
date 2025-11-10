@@ -1,140 +1,88 @@
-import { useState, useEffect } from 'react';
-import { getItens, createItem, updateItem, deleteItem } from '../services/api';
-import Modal from '../components/Modal';
-import CrudForm from '../components/CrudForm';
+import { useEffect, useState } from "react";
+import { getItens, createItem, updateItem, deleteItem } from "../services/api";
+import Modal from "../components/Modal";
+import CrudForm from "../components/CrudForm";
 
-// Configuração da entidade
-const API_ENDPOINT = '/palestras';
-const ENTITY_NAME = 'Palestra';
+const API_ENDPOINT = "/palestras";
+const ENTITY = "Palestra";
 
 const fields = [
-  { name: 'tema', label: 'Tema' },
-  { name: 'data', label: 'Data', type: 'date' },
-  { name: 'horario', label: 'Horário', type: 'time' },
-  { name: 'local', label: 'Local' },
-  { name: 'palestrante', label: 'Palestrante' },
-  { name: 'formacaoPalestrante', label: 'Formação do Palestrante' },
-  { name: 'publicoAlvo', label: 'Público Alvo' },
-  { name: 'funcionarioId', label: 'ID Funcionário Resp.', type: 'number' },
+  { name: "tema", label: "Tema" },
+  { name: "data", label: "Data", type: "date" },
+  { name: "horario", label: "Horário", type: "time" },
+  { name: "local", label: "Local" },
+  { name: "palestrante", label: "Palestrante" },
 ];
 
-const tableColumns = [
-  { key: 'id', label: 'ID' },
-  { key: 'tema', label: 'Tema' },
-  { key: 'data', label: 'Data' },
-  { key: 'local', label: 'Local' },
-  { key: 'palestrante', label: 'Palestrante' },
-];
+const empty = { tema: "", data: "", horario: "", local: "", palestrante: "" };
 
-const emptyForm = { tema: '', data: '', horario: '', local: '', palestrante: '', formacaoPalestrante: '', publicoAlvo: '', funcionarioId: '' };
-
-// Componente da Página
 export default function PalestraPage() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [currentItem, setCurrentItem] = useState(emptyForm);
+  const [current, setCurrent] = useState(empty);
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const data = await getItens(API_ENDPOINT);
-      setItems(data);
-      setError(null);
-    } catch (err) { setError('Erro ao buscar dados: ' + err.message); } 
-    finally { setLoading(false); }
+  const fetch = async () => {
+    try { setLoading(true); const data = await getItens(API_ENDPOINT); setItems(data || []); setError(null); }
+    catch (err) { setError("Erro ao buscar: " + err.message); } finally { setLoading(false); }
   };
 
-  useEffect(() => { fetchData(); }, []);
+  useEffect(() => { fetch(); }, []);
+
+  const handleCreate = () => { setCurrent(empty); setIsEditing(false); setIsModalOpen(true); };
+  const handleEdit = (item) => { setCurrent(item); setIsEditing(true); setIsModalOpen(true); };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Tem certeza?")) return;
+    try { await deleteItem(API_ENDPOINT, id); fetch(); } catch (err) { setError("Erro ao excluir: " + err.message); }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (isEditing) {
-        await updateItem(API_ENDPOINT, currentItem.id, currentItem);
-      } else {
-        await createItem(API_ENDPOINT, currentItem);
-      }
-      fetchData();
-      handleCancel();
-    } catch (err) { setError('Erro ao salvar: ' + err.message); }
+      if (isEditing) await updateItem(API_ENDPOINT, current.id, current);
+      else await createItem(API_ENDPOINT, current);
+      fetch(); setIsModalOpen(false);
+    } catch (err) { setError("Erro ao salvar: " + err.message); }
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm('Tem certeza?')) {
-      try {
-        await deleteItem(API_ENDPOINT, id);
-        fetchData();
-      } catch (err) { setError('Erro ao excluir: ' + err.message); }
-    }
-  };
-
-  const handleCreate = () => {
-    setCurrentItem(emptyForm);
-    setIsEditing(false);
-    setIsModalOpen(true);
-  };
-
-  const handleEdit = (item) => {
-    setCurrentItem(item);
-    setIsEditing(true);
-    setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    setCurrentItem(emptyForm);
-  };
-
-  if (loading) return <p>Carregando...</p>;
+  if (loading) return <div className="container">Carregando...</div>;
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-4xl font-bold">Gerenciar {ENTITY_NAME}s</h1>
-        <button onClick={handleCreate} className="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">
-          Nova {ENTITY_NAME}
-        </button>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+        <h1>Gerenciar {ENTITY}s</h1>
+        <button className="btn btn-primary" onClick={handleCreate}>Adicionar {ENTITY}</button>
       </div>
 
-      {error && <p className="text-red-500 bg-red-100 p-3 rounded mb-4">{error}</p>}
+      {error && <div style={{ color: "crimson", marginBottom: 12 }}>{error}</div>}
 
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              {tableColumns.map(col => (
-                <th key={col.key} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">{col.label}</th>
-              ))}
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Ações</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {items.map((item) => (
-              <tr key={item.id} className="hover:bg-gray-50">
-                {tableColumns.map(col => (
-                  <td key={col.key} className="px-6 py-4 whitespace-nowrap">{item[col.key]}</td>
-                ))}
-                <td className="px-6 py-4 text-right space-x-2 whitespace-nowrap">
-                  <button onClick={() => handleEdit(item)} className="px-3 py-1 bg-yellow-500 text-white rounded text-sm font-medium hover:bg-yellow-600">Editar</button>
-                  <button onClick={() => handleDelete(item.id)} className="px-3 py-1 bg-red-600 text-white rounded text-sm font-medium hover:bg-red-700">Excluir</button>
+      <div className="table-container">
+        <table>
+          <thead><tr><th>ID</th><th>Tema</th><th>Data</th><th>Local</th><th>Palestrante</th><th style={{ textAlign: "right" }}>Ações</th></tr></thead>
+          <tbody>
+            {items.map((it) => (
+              <tr key={it.id}>
+                <td>{it.id}</td>
+                <td>{it.tema}</td>
+                <td>{it.data}</td>
+                <td>{it.local}</td>
+                <td>{it.palestrante}</td>
+                <td style={{ textAlign: "right" }}>
+                  <button className="btn btn-secondary" onClick={() => handleEdit(it)} style={{ marginRight: 8 }}>Editar</button>
+                  <button className="btn" onClick={() => handleDelete(it.id)} style={{ background: "#e03131", color: "#fff", border: "none" }}>Excluir</button>
                 </td>
               </tr>
             ))}
+            {items.length === 0 && <tr><td colSpan={6} style={{ padding: 16 }}>Nenhum registro.</td></tr>}
           </tbody>
         </table>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={handleCancel} title={isEditing ? `Editar ${ENTITY_NAME}` : `Nova ${ENTITY_NAME}`}>
-        <CrudForm
-          entity={currentItem}
-          setEntity={setCurrentItem}
-          fields={fields}
-          onSubmit={handleSubmit}
-          onCancel={handleCancel}
-        />
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={isEditing ? `Editar ${ENTITY}` : `Nova ${ENTITY}`}>
+        <CrudForm entity={current} setEntity={setCurrent} fields={fields} onSubmit={handleSubmit} onCancel={() => setIsModalOpen(false)} />
       </Modal>
     </div>
   );

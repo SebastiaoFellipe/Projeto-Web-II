@@ -1,3 +1,14 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "./styles/global.css";
+@import "./styles/layout.css";
+@import "./styles/sidebar.css";
+@import "./styles/table.css";
+@import "./styles/buttons.css";
+@import "./styles/form.css";
+@import "./styles/modal.css";
+
+.main-content {
+  margin-left: 250px; /* mesma largura da sidebar */
+  padding: 20px;
+  min-height: 100vh;
+  background: #f8fafb;
+}

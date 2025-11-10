@@ -1,38 +1,43 @@
-import { NavLink } from 'react-router-dom';
-
-const links = [
-  { name: 'Funcionários', path: '/funcionarios' },
-  { name: 'Professores', path: '/professores' },
-  { name: 'Palestras', path: '/palestras' },
-  { name: 'Visitas', path: '/visitas' },
-  { name: 'Animais', path: '/animais' },
-  { name: 'Habitats', path: '/habitats' },
-  { name: 'Candidatos', path: '/candidatos' },
-];
+import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
-  const linkClass = "block px-4 py-2 rounded-md text-gray-700 hover:bg-blue-500 hover:text-white transition-colors";
-  const activeLinkClass = "bg-blue-600 text-white";
+  const links = [
+    { to: "/", label: "Dashboard" },
+    { to: "/funcionarios", label: "Funcionários" },
+    { to: "/professores", label: "Professores" },
+    { to: "/palestras", label: "Palestras" },
+    { to: "/visitas", label: "Visitas" },
+    { to: "/animais", label: "Animais" },
+    { to: "/habitats", label: "Habitats" },
+    { to: "/candidatos", label: "Candidatos" },
+  ];
 
   return (
-    <div className="w-64 h-screen bg-white shadow-lg p-4">
-      <h2 className="text-2xl font-bold text-blue-700 mb-6">Aquário</h2>
-      <nav>
-        <ul>
-          {links.map((link) => (
-            <li key={link.name} className="mb-2">
-              <NavLink
-                to={link.path}
-                className={({ isActive }) =>
-                  `${linkClass} ${isActive ? activeLinkClass : ''}`
-                }
-              >
-                {link.name}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+    <aside className="sidebar" aria-label="Sidebar">
+      <div style={{ padding: "0 20px 12px 20px" }}>
+        <h2 style={{ fontSize: 20, fontWeight: 800, marginBottom: 8 }}>Aquário</h2>
+        <p style={{ fontSize: 12, opacity: 0.9 }}>Painel Administrativo</p>
+      </div>
+
+      <nav style={{ padding: "8px 16px", display: "flex", flexDirection: "column", gap: 8 }}>
+        {links.map((l) => (
+          <NavLink
+            to={l.to}
+            key={l.to}
+            end={l.to === "/"}
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link"
+            }
+            style={{ textDecoration: "none" }}
+          >
+            {l.label}
+          </NavLink>
+        ))}
       </nav>
-    </div>
+
+      <div style={{ marginTop: "auto", padding: 16, fontSize: 12, opacity: 0.9 }}>
+        Versão 1.0 • Admin
+      </div>
+    </aside>
   );
 }

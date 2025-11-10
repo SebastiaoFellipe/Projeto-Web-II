@@ -1,0 +1,25 @@
+/* ===== TABLE STYLE ===== */
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: #fff;
+  padding: 1rem;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th, td {
+  padding: 12px 16px;
+}
+
+th {
+  background: var(--primary);
+  color: #fff;
+}

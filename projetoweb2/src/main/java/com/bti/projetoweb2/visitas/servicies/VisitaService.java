@@ -28,15 +28,10 @@ public class VisitaService {
         return visitaRepository.findAll(pageable);
     }
 
-    
-    // garante que o ID da visita seja gerado antes de criar o vínculo ManyToMany.
-     
     @Transactional
-    public void salvarVisita(Visita visita, List<Long> funcionarioIds) {
-        // Salva primeiro a visita para gerar o ID (necessário para a FK)
+    public Visita salvarVisita(Visita visita, List<Long> funcionarioIds) {
         Visita visitaSalva = visitaRepository.save(visita);
 
-        // Se houver funcionários, associa depois
         if (funcionarioIds != null && !funcionarioIds.isEmpty()) {
             Set<Funcionario> funcionarios = new HashSet<>(funcionarioRepository.findAllById(funcionarioIds));
             visitaSalva.setFuncionarios(funcionarios);
@@ -44,15 +39,14 @@ public class VisitaService {
             visitaSalva.setFuncionarios(new HashSet<>());
         }
 
-        // Salva novamente com as associações
-        visitaRepository.save(visitaSalva);
+        return visitaRepository.save(visitaSalva);
     }
 
-    public Visita buscarPorId(long id) {
+    public Visita buscarPorId(Integer id) {
         return visitaRepository.findById(id).orElse(null);
     }
 
-    public void deletarVisita(long id) {
+    public void deletarVisita(Integer id) {
         visitaRepository.deleteById(id);
     }
 

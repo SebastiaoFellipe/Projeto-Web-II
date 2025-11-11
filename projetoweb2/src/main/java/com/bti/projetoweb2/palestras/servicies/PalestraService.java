@@ -25,13 +25,13 @@ public class PalestraService {
     }
 
     // CRIAR/ATUALIZAR PALESTRAS
-    public void salvarPalestra(Palestra palestra) {
+    public Palestra salvarPalestra(Palestra palestra) {
         if (palestra.getFuncionarioId() != null) {
             Funcionario funcionario = funcionarioRepository.findById(palestra.getFuncionarioId())
                     .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
             palestra.setFuncionario(funcionario);
         }
-        palestraRepository.save(palestra);
+        return palestraRepository.save(palestra);
     }
 
     // BUSCAR PALESTRA POR ID

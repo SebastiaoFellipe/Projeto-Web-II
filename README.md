@@ -73,6 +73,34 @@ __*Entidades:*__
 
       http://localhost:8080/visitas
 
+## ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+
+O projeto frontend (React) está na pasta `frontend/` e precisa ser executado **simultaneamente** com a API Spring Boot.
+
+__*Para iniciar o Frontend (React):*__
+
+1.  Abra um **novo terminal** (mantenha o terminal do Spring Boot rodando).
+2.  Navegue até a pasta `frontend` na raiz do projeto:
+    ```bash
+    cd frontend
+    ```
+3.  Instale as dependências do Node.js (necessário apenas na primeira vez):
+    ```bash
+    npm install
+    ```
+4.  Inicie o servidor de desenvolvimento do React (Vite):
+    ```bash
+    npm run dev
+    ```
+5.  O frontend estará acessível no seu navegador em:
+    ```
+    http://localhost:5173
+    ```
+
+**Importante:** Você deve ter **dois terminais** abertos para a aplicação funcionar:
+1.  Um rodando o **Backend Spring Boot** (na porta 8080)
+2.  Outro rodando o **Frontend React** (na porta 5173)
+
 ### REFERÊNCIA
 
 __*Neves, T. R. TURISMO E ACESSIBILIDADE: um estudo nos equipamentos turísticos natalenses, aquário Natal e Fortaleza dos Reis Magos com base na Associação Brasileira de Normas Técnicas (ABNT). Trabalho de Conclusão de Curso em Turismo, UFRN, Natal, RN, 2013.*__

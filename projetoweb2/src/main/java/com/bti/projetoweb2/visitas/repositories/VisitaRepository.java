@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.bti.projetoweb2.visitas.entities.Visita;
 
-public interface VisitaRepository extends JpaRepository<Visita, Long> {
+public interface VisitaRepository extends JpaRepository<Visita, Integer> {
 
     // Busca por nome (ignorando maiúsculas/minúsculas)
     List<Visita> findByNomeContainingIgnoreCase(String parteNome);

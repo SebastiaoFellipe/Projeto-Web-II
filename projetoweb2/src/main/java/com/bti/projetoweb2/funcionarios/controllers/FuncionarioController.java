@@ -2,74 +2,59 @@ package com.bti.projetoweb2.funcionarios.controllers;
 
 import com.bti.projetoweb2.funcionarios.entities.Funcionario;
 import com.bti.projetoweb2.funcionarios.services.FuncionarioService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Optional;
+import java.util.List;
 
-@Controller
-@RequestMapping("/funcionarios")
+@RestController
+@RequestMapping("/api/funcionarios")
+@CrossOrigin(origins = "http://localhost:5173")
 public class FuncionarioController {
 
-    private final FuncionarioService funcionarioService;
+    @Autowired
+    private FuncionarioService funcionarioService;
 
-    public FuncionarioController(FuncionarioService funcionarioService) {
-        this.funcionarioService = funcionarioService;
-    }
-
-    
     @GetMapping
-    public String listFuncionarios(Model model) {
-        model.addAttribute("funcionarios", funcionarioService.listarTodos());
-        return "funcionarios/list";
+    public List<Funcionario> listarFuncionarios() {
+        return funcionarioService.listarTodos();
     }
 
-    
-    @GetMapping("/cadastrar")
-    public String showCreateForm(Model model) {
-        model.addAttribute("funcionario", new Funcionario());
-        model.addAttribute("isEdit", false);
-        return "funcionarios/form";
+    @GetMapping("/{id}")
+    public ResponseEntity<Funcionario> buscarFuncionarioPorId(@PathVariable Long id) {
+        Funcionario funcionario = funcionarioService.buscarPorId(id)
+                .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+        return ResponseEntity.ok(funcionario);
     }
 
-    
-    @PostMapping("/salvar")
-    public String saveFuncionario(@ModelAttribute Funcionario funcionario, RedirectAttributes redirectAttributes) {
+    @PostMapping
+    public ResponseEntity<?> salvarFuncionario(@RequestBody Funcionario funcionario) {
         try {
-            funcionarioService.salvar(funcionario);
-            redirectAttributes.addFlashAttribute("message", "Funcionário cadastrado com sucesso!");
+            Funcionario salvo = funcionarioService.salvar(funcionario);
+            return ResponseEntity.ok(salvo);
         } catch (RuntimeException e) {
-            redirectAttributes.addFlashAttribute("error", "Erro: " + e.getMessage());
-        }
-        return "redirect:/funcionarios";
-    }
-
-    
-    @GetMapping("/editar/{id}")
-    public String showEditForm(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
-        Optional<Funcionario> funcionarioOpt = funcionarioService.buscarPorId(id);
-
-        if (funcionarioOpt.isPresent()) {
-            model.addAttribute("funcionario", funcionarioOpt.get());
-            model.addAttribute("isEdit", true);
-            return "funcionarios/form";
-        } else {
-            redirectAttributes.addFlashAttribute("error", "Funcionário não encontrado.");
-            return "redirect:/funcionarios";
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    
-    @GetMapping("/deletar/{id}")
-    public String deleteFuncionario(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizarFuncionario(@PathVariable Long id, @RequestBody Funcionario funcionario) {
+        try {
+            Funcionario atualizado = funcionarioService.atualizar(id, funcionario);
+            return ResponseEntity.ok(atualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarFuncionario(@PathVariable Long id) {
         try {
             funcionarioService.deletar(id);
-            redirectAttributes.addFlashAttribute("message", "Funcionário deletado com sucesso.");
+            return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
-            redirectAttributes.addFlashAttribute("error", "Erro ao deletar: " + e.getMessage());
+            return ResponseEntity.notFound().build();
         }
-        return "redirect:/funcionarios";
     }
 }

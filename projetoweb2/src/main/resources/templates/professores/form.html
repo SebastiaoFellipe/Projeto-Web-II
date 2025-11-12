@@ -14,7 +14,7 @@
                     colors: {
                         
                         'aquarium-primary': '#81C3B7', 
-                        'aquarium-dark': '#73B0A5',     
+                        'aquarium-dark': '#73B0A5',     
                     },
                 },
             },
@@ -31,48 +31,56 @@
     <div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-2xl">
         <h1 class="text-3xl font-bold text-gray-800 mb-6 border-b-2 pb-2"
             th:text="${isEdit ? 'Editar Professor' : 'Cadastrar Novo Professor'}">
-             Formulário de Professores
-        </h1>
+             Formulário de Professores
+        </h1>
 
+        <!-- O action aponta para /professores/salvar, que trata tanto o POST de cadastro quanto o de edição -->
         <form th:action="@{/professores/salvar}" th:object="${professor}" method="post" class="space-y-6">
 
+            <!-- Campo oculto para o ID, necessário para edição -->
             <input type="hidden" th:field="*{id}" />
 
+            <!-- Campo Nome (Herança de Pessoa) -->
             <div>
                 <label for="nome" class="block text-sm font-medium text-gray-700">Nome:</label>
                 <p th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="text-red-500 text-xs italic"></p>
                 <input type="text" id="nome" th:field="*{nome}" required
-                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-aquarium-primary focus:border-aquarium-primary sm:text-sm">
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-aquarium-primary focus:border-aquarium-primary sm:text-sm">
             </div>
 
+            <!-- Campo CPF (Herança de Pessoa) -->
             <div>
                 <label for="cpf" class="block text-sm font-medium text-gray-700">CPF:</label>
                 <p th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}" class="text-red-500 text-xs italic"></p>
                 <input type="text" id="cpf" th:field="*{cpf}" required
-                       placeholder="Ex: 000.000.000-00"
-                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-aquarium-primary focus:border-aquarium-primary sm:text-sm">
+                    placeholder="Ex: 000.000.000-00"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-aquarium-primary focus:border-aquarium-primary sm:text-sm">
             </div>
 
+            <!-- Campo Área Aplicada (Propriedade: areaAplicada) -->
             <div>
-                <label for="area-aplicada" class="block text-sm font-medium text-gray-700">Área Aplicada:</label>
-                <p th:if="${#fields.hasErrors('area-aplicada')}" th:errors="*{disciplina}" class="text-red-500 text-xs italic"></p>
-                <input type="text" id="area-aplicada" th:field="*{disciplina}" required
-                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-aquarium-primary focus:border-aquarium-primary sm:text-sm">
+                <label for="areaAplicada" class="block text-sm font-medium text-gray-700">Área Aplicada:</label>
+                <p th:if="${#fields.hasErrors('areaAplicada')}" th:errors="*{areaAplicada}" class="text-red-500 text-xs italic"></p>
+                <input type="text" id="areaAplicada" th:field="*{areaAplicada}" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-aquarium-primary focus:border-aquarium-primary sm:text-sm">
             </div>
 
+            <!-- Campo Nível Acadêmico (Propriedade: nivelAcademico) -->
             <div>
-                <label for="nivelEnsino" class="block text-sm font-medium text-gray-700">Nível Acadêmico:</label>
-                <p th:if="${#fields.hasErrors('nivelEnsino')}" th:errors="*{nivelEnsino}" class="text-red-500 text-xs italic"></p>
-                <select id="nivelEnsino" th:field="*{nivelEnsino}" required
+                <label for="nivelAcademico" class="block text-sm font-medium text-gray-700">Nível Acadêmico:</label>
+                <p th:if="${#fields.hasErrors('nivelAcademico')}" th:errors="*{nivelAcademico}" class="text-red-500 text-xs italic"></p>
+                <select id="nivelAcademico" th:field="*{nivelAcademico}" required
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-aquarium-primary focus:border-aquarium-primary sm:text-sm">
                     <option value="" disabled selected>Selecione o Nível Acadêmico</option>
-                    <option th:value="FUNDAMENTAL" th:text="Fundamental">Graduação</option>
-                    <option th:value="MEDIO" th:text="Médio">Mestrado</option>
-                    <option th:value="SUPERIOR" th:text="Superior">Doutorado</option>
-                    <option th:value="SUPERIOR" th:text="Superior">Pós-Doutorado</option>
+                    <!-- Opções definidas pelo Enum NivelAcademico -->
+                    <option th:value="GRADUACAO" th:text="Graduação"></option>
+                    <option th:value="MESTRADO" th:text="Mestrado"></option>
+                    <option th:value="DOUTORADO" th:text="Doutorado"></option>
+                    <option th:value="POS_DOUTORADO" th:text="Pós-Doutorado"></option>
                 </select>
             </div>
 
+            <!-- Botões de Ação -->
             <div class="flex justify-between pt-4">
                 <a th:href="@{/professores}"
                     class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-300">

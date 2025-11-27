@@ -1,6 +1,5 @@
 package com.bti.projetoweb2.entities;
 
-import com.bti.projetoweb2.entities.Funcionario;
 import jakarta.persistence.*;
 
 @Entity

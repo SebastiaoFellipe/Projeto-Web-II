@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
-import com.bti.projetoweb2.entities.Funcionario;
 
 @Entity
 @Table(name = "visitas")

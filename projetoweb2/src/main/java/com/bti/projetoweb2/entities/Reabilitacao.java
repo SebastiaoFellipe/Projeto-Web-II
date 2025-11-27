@@ -2,7 +2,6 @@ package com.bti.projetoweb2.entities;
 
 import java.util.Date;
 
-import com.bti.projetoweb2.entities.Funcionario;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;

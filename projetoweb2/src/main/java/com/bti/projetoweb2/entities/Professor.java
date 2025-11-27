@@ -1,14 +1,12 @@
 package com.bti.projetoweb2.entities;
 
-import com.bti.projetoweb2.entities.Pessoa;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "professores")
-public class Professor extends Pessoa {
+public class Professor extends Funcionario {
 
     @NotBlank(message = "A disciplina é obrigatória.")
     private String areaAplicada;
@@ -17,13 +15,12 @@ public class Professor extends Pessoa {
     @Enumerated(EnumType.STRING)
     private NivelAcademico nivelAcademico;
 
-
     public Professor() {}
 
-    public Professor(String nome, String cpf, String disciplina, NivelAcademico nivelEnsino){
-        super(nome, cpf); 
-        this.areaAplicada = disciplina;
-        this.nivelAcademico = nivelEnsino;
+    public Professor(String nome, String cpf, String cargo, TipoVinculo tipoVinculo, String areaAplicada, NivelAcademico nivelAcademico) {
+        super(nome, cpf, cargo, tipoVinculo);
+        this.areaAplicada = areaAplicada;
+        this.nivelAcademico = nivelAcademico;
     }
 
     public String getAreaAplicada() { return areaAplicada; }

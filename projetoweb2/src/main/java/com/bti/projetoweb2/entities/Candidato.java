@@ -1,7 +1,5 @@
 package com.bti.projetoweb2.entities;
 
-import com.bti.projetoweb2.entities.Pessoa;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;

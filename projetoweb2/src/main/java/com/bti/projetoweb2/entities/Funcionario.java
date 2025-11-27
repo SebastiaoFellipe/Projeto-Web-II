@@ -6,10 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.bti.projetoweb2.entities.Visita;
-import com.bti.projetoweb2.entities.Pessoa;
-import com.bti.projetoweb2.entities.Palestra;
-
 @Entity
 @Table(name = "funcionarios")
 public class Funcionario extends Pessoa {

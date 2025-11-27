@@ -3,6 +3,9 @@ package com.bti.projetoweb2.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,8 +42,9 @@ public class AnimalController {
         @ApiResponse(responseCode = "404", description = "Nenhum animal encontrado"),
         @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
-    public List<Animal> listarTodos() {
-        return animalService.listarTodos();
+    public Page<Animal> listarTodos() {
+        Pageable pageable = PageRequest.of(0, 5);
+        return animalService.listarTodos(pageable);
     }
 
     @GetMapping("/{id}")

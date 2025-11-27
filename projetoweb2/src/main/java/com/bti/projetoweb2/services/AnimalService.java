@@ -3,11 +3,15 @@ package com.bti.projetoweb2.services;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.bti.projetoweb2.entities.Animal;
 import com.bti.projetoweb2.entities.Habitat;
 import com.bti.projetoweb2.repositories.AnimalRepository;
 import com.bti.projetoweb2.repositories.HabitatRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class AnimalService {
@@ -19,8 +23,14 @@ public class AnimalService {
         this.habitatRepository = habitatRepository;
     }
 
-    public List<Animal> listarTodos() {
-        return animalRepository.findAll();
+    public Page<Animal> listarTodos(Pageable pageable) {
+        Page<Animal> animais = animalRepository.findAll(pageable);
+
+        if (animais.isEmpty()) {
+            throw new EntityNotFoundException("Nenhum animal encontrado");
+        }
+
+        return animais;
     }
 
     public Animal buscarPorId(Long id) {

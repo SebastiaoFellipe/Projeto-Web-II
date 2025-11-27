@@ -25,27 +25,27 @@ public class ReabilitacaoController {
         this.reabilitacaoService = reabilitacaoService;
     }
 
-    @GetMapping//http://localhost:8080/api/reabilitacoes
+    @GetMapping
     public List<Reabilitacao> listarTodos() {
         return reabilitacaoService.listarTodos();
     }
 
-    @GetMapping("/{id}")//http://localhost:8080/api/reabilitacoes/1
+    @GetMapping("/{id}")
     public Reabilitacao buscarPorId(@PathVariable Long id) {
         return reabilitacaoService.buscarPorId(id);
     }
 
-    @PostMapping//http://localhost:8080/api/reabilitacoes
+    @PostMapping
     public Reabilitacao salvar(@RequestBody Reabilitacao reabilitacao) {
         return reabilitacaoService.salvar(reabilitacao);
     }
 
-    @PutMapping("/{id}")//http://localhost:8080/api/reabilitacoes/1
+    @PutMapping("/{id}")
     public Reabilitacao atualizar(@PathVariable Long id, @RequestBody Reabilitacao reabilitacaoAtualizado) {
         return reabilitacaoService.atualizar(id, reabilitacaoAtualizado);
     }
 
-    @DeleteMapping("/{id}")//http://localhost:8080/api/reabilitacoes/1
+    @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         reabilitacaoService.deletar(id);
     }

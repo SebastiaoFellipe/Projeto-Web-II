@@ -25,27 +25,27 @@ public class CandidatoController {
         this.candidatoService = candidatoService;
     }
 
-    @GetMapping //http://localhost:8080/api/candidatos
+    @GetMapping
     public List<Candidato> listarTodos() {
         return candidatoService.listarTodos();
     }
 
-    @GetMapping("/{id}") //http://localhost:8080/api/candidatos/1
+    @GetMapping("/{id}")
     public Candidato buscarPorId(@PathVariable Long id) {
         return candidatoService.buscarPorId(id);
     }
 
-    @PostMapping //http://localhost:8080/api/candidatos
+    @PostMapping
     public Candidato salvar(@RequestBody Candidato candidato) {
         return candidatoService.salvar(candidato);
     }
 
-    @PutMapping("/{id}") //http://localhost:8080/api/candidatos/1
+    @PutMapping("/{id}")
     public Candidato atualizar(@PathVariable Long id, @RequestBody Candidato candidatoAtualizado) {
         return candidatoService.atualizar(id, candidatoAtualizado);
     }
 
-    @DeleteMapping("/{id}") //http://localhost:8080/api/candidatos/1
+    @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         candidatoService.deletar(id);
     }

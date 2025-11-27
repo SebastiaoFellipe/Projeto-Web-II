@@ -25,52 +25,52 @@ public class AnimalController {
         this.animalService = animalService;
     }
 
-    @GetMapping///http://localhost:8080/api/animais
+    @GetMapping
     public List<Animal> listarTodos() {
         return animalService.listarTodos();
     }
 
-    @GetMapping("/{id}")//http://localhost:8080/api/animais/1
+    @GetMapping("/{id}")
     public Animal buscarPorId(@PathVariable Long id) {
         return animalService.buscarPorId(id);
     }
 
-    @GetMapping("/especie/{especie}")//http://localhost:8080/api/animais/especie/ave
+    @GetMapping("/especie/{especie}")
     public List<Animal> buscarPorEspecie(@PathVariable String especie) {
         return animalService.buscarPorEspecie(especie);
     }
 
-    @GetMapping("/status-saude/{statusSaude}")//http://localhost:8080/api/animais/status-saude/Saud%C3%A1vel
+    @GetMapping("/status-saude/{statusSaude}")
     public List<Animal> buscarPorStatusSaude(@PathVariable String statusSaude) {
         return animalService.buscarPorStatusSaude(statusSaude);
     }
 
-    @GetMapping("/classificacao/{classificacao}")//http://localhost:8080/api/animais/classificacao/AMEACADO
+    @GetMapping("/classificacao/{classificacao}")
     public List<Animal> buscarPorClassificacao(@PathVariable Animal.Classificacao classificacao) {
         return animalService.buscarPorClassificacao(classificacao);
     }
 
-    @GetMapping("/habitat/{habitatId}")//http://localhost:8080/api/animais/habitat/1
+    @GetMapping("/habitat/{habitatId}")
     public List<Animal> buscarPorHabitatId(@PathVariable Long habitatId) {
         return animalService.buscarPorHabitatId(habitatId);
     }
 
-    @GetMapping("/familia/{familia}")//http://localhost:8080/api/animais/familia/Callichthyidae
+    @GetMapping("/familia/{familia}")
     public List<Animal> buscarPorFamilia(@PathVariable String familia) {
         return animalService.buscarPorFamilia(familia);
     }
 
-    @PostMapping //http://localhost:8080/api/animais
+    @PostMapping
     public Animal salvar(@RequestBody Animal animal) {
         return animalService.salvar(animal);
     }
 
-    @PutMapping("/{id}")//http://localhost:8080/api/animais/1
+    @PutMapping("/{id}")
     public Animal atualizar(@PathVariable Long id, @RequestBody Animal animalAtualizado) {
         return animalService.atualizar(id, animalAtualizado);
     }
 
-    @DeleteMapping("/{id}")//http://localhost:8080/api/animais/1
+    @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         animalService.deletar(id);
     }

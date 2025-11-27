@@ -25,27 +25,27 @@ public class HabitatController {
         this.habitatService = habitatService;
     }
 
-    @GetMapping//http://localhost:8080/api/habitats
+    @GetMapping
     public List<Habitat> listarTodos() {
         return habitatService.listarTodos();
     }
 
-    @GetMapping("/{id}")//http://localhost:8080/api/habitats/1
+    @GetMapping("/{id}")
     public Habitat buscarPorId(@PathVariable Long id) {
         return habitatService.buscarPorId(id);
     }
 
-    @PostMapping//http://localhost:8080/api/habitats
+    @PostMapping
     public Habitat salvar(@RequestBody Habitat habitat) {
         return habitatService.salvar(habitat);
     }
 
-    @PutMapping("/{id}")//http://localhost:8080/api/habitats/1
+    @PutMapping("/{id}")
     public Habitat atualizar(@PathVariable Long id, @RequestBody Habitat habitatAtualizado) {
         return habitatService.atualizar(id, habitatAtualizado);
     }
 
-    @DeleteMapping("/{id}")//http://localhost:8080/api/habitats/1
+    @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         habitatService.deletar(id);
     }

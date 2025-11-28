@@ -38,6 +38,9 @@ public class Animal {
     @JsonBackReference
     private Habitat habitat;
 
+    @OneToMany(mappedBy = "animal")
+    private List<Alimentacao> alimentacoes;
+
     @NotBlank(message = "O nome é obrigatório.")
     private String nome;
 
@@ -185,4 +188,26 @@ public class Animal {
     public void setHabitat(Habitat habitat) {
         this.habitat = habitat;
     }
+
+    public List<Reabilitacao> getReabilitacaos() {
+        return reabilitacaos;
+    }
+
+    public void setReabilitacaos(List<Reabilitacao> reabilitacaos) {
+        this.reabilitacaos = reabilitacaos;
+    }
+
+    public List<Alimentacao> getAlimentacoes() {
+        return alimentacoes;
+    }
+
+    public void setAlimentacoes(List<Alimentacao> alimentacoes) {
+        this.alimentacoes = alimentacoes;
+    }
+
+    public void setIdade(Integer idade) {
+        this.idade = idade;
+    }
+
+    
 }

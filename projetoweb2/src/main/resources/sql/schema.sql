@@ -37,6 +37,31 @@ CREATE TABLE animais (
     FOREIGN KEY (habitat_id) REFERENCES habitats(id)
 );
 
+-- Tabela Estoque
+CREATE TABLE estoque (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    codigo_produto VARCHAR(255) NOT NULL,
+    nome_produto VARCHAR(255) NOT NULL,
+    quantidade INT NOT NULL,
+    unidade_medida VARCHAR(100) NOT NULL,
+    data_validade DATE NOT NULL
+);
+
+-- Tabela Alimentacao
+CREATE TABLE alimentacoes (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    tipo_alimentacao VARCHAR(255) NOT NULL,
+    quantidade DOUBLE NOT NULL,
+    data_alimentacao DATE NOT NULL,
+    observacoes VARCHAR(255),
+    funcionario_id BIGINT NOT NULL,
+    animal_id BIGINT NOT NULL,
+    estoque_id BIGINT,
+    CONSTRAINT fk_alimentacao_animal FOREIGN KEY (animal_id) REFERENCES animais(id),
+    CONSTRAINT fk_alimentacao_funcionario FOREIGN KEY (funcionario_id) REFERENCES funcionarios(id),
+    CONSTRAINT fk_alimentacao_estoque FOREIGN KEY (estoque_id) REFERENCES estoque(id)
+);
+
 -- Tabela Reabilitacao
 CREATE TABLE reabilitacoes (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,

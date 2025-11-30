@@ -2,18 +2,18 @@ package com.bti.projetoweb2.entities;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "alimentacoes")
 public class Alimentacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,6 @@ public class Alimentacao {
     @NotNull(message = "O funcionário é obrigatório.")
     @ManyToOne
     @JoinColumn(name = "funcionario_id")
-    @JsonBackReference
     private Funcionario funcionario;
 
     @NotNull(message = "O animal é obrigatório.")

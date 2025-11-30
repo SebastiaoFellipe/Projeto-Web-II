@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.bti.projetoweb2.entities.Alimentacao;
 
 @Repository
-public interface AlimentacaoRespository extends JpaRepository<Alimentacao, Long> {
+public interface AlimentacaoRepository extends JpaRepository<Alimentacao, Long> {
     
 }

@@ -1,8 +1,9 @@
 package com.bti.projetoweb2.services;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.bti.projetoweb2.entities.Reabilitacao;
@@ -22,8 +23,10 @@ public class ReabilitacaoService {
         this.funcionarioRepository = funcionarioRepository;
     }
 
-    public List<Reabilitacao> listarTodos() {
-        return reabilitacaoRepository.findAll();
+    public Page<Reabilitacao> listarTodos(Pageable pageable) {
+        Page<Reabilitacao> reabilitacoes = reabilitacaoRepository.findAll(pageable);
+
+        return reabilitacoes;
     }
 
     public Reabilitacao buscarPorId(Long id) {

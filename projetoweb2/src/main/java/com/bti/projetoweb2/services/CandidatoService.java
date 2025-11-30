@@ -1,7 +1,7 @@
 package com.bti.projetoweb2.services;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.bti.projetoweb2.entities.Candidato;
@@ -15,8 +15,10 @@ public class CandidatoService {
         this.candidatoRepository = candidatoRepository;
     }
 
-    public List<Candidato> listarTodos() {
-        return candidatoRepository.findAll();
+    public Page<Candidato> listarTodos(Pageable pageable) {
+        Page<Candidato> candidatos = candidatoRepository.findAll(pageable);
+
+        return candidatos;
     }
 
     public Candidato buscarPorId(Long id) {

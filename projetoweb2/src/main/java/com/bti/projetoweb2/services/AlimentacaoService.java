@@ -27,4 +27,13 @@ public class AlimentacaoService {
         return alimentacao;
     }
 
+    public Alimentacao buscarPorId(Long id) {
+        return alimentacaoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Alimentacao com ID " + id + " não encontrado"));
+    }
+
+    public Alimentacao cadastrar(Alimentacao alimentacao) {
+        return alimentacaoRepository.save(alimentacao);
+    }
+
 }

@@ -36,4 +36,22 @@ public class AlimentacaoService {
         return alimentacaoRepository.save(alimentacao);
     }
 
+    public Alimentacao atualizar(Long id, Alimentacao alimentacaoAtualizada) {
+        Alimentacao alimentacaoExistente = buscarPorId(id);
+
+        alimentacaoExistente.setTipoAlimentacao(alimentacaoAtualizada.getTipoAlimentacao());
+        alimentacaoExistente.setQuantidade(alimentacaoAtualizada.getQuantidade());
+        alimentacaoExistente.setDataAlimentacao(alimentacaoAtualizada.getDataAlimentacao());
+        alimentacaoExistente.setObservacoes(alimentacaoAtualizada.getObservacoes());
+        alimentacaoExistente.setFuncionario(alimentacaoAtualizada.getFuncionario());
+        alimentacaoExistente.setAnimal(alimentacaoAtualizada.getAnimal());
+        alimentacaoExistente.setEstoque(alimentacaoAtualizada.getEstoque());
+
+        return alimentacaoRepository.save(alimentacaoExistente);
+    }
+
+    public void deletar(Long id) {
+        Alimentacao alimentacaoExistente = buscarPorId(id);
+        alimentacaoRepository.delete(alimentacaoExistente);
+    }
 }

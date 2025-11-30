@@ -1,7 +1,7 @@
 package com.bti.projetoweb2.services;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.bti.projetoweb2.entities.Habitat;
@@ -15,8 +15,10 @@ public class HabitatService {
         this.habitatRepository = habitatRepository;
     }
 
-    public List<Habitat> listarTodos() {
-        return habitatRepository.findAll();
+    public Page<Habitat> listarTodos(Pageable pageable) {
+        Page<Habitat> habitats = habitatRepository.findAll(pageable);
+
+        return habitats;
     }
 
     public Habitat buscarPorId(Long id) {

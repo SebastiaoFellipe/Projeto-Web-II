@@ -1,0 +1,32 @@
+/* ===== FORMS ===== */
+
+form {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  max-width: 600px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius);
+  border: 1px solid #c9d6db;
+  margin-bottom: 15px;
+  transition: 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 4px rgba(0,153,204,0.4);
+}

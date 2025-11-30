@@ -1,11 +1,11 @@
 package com.bti.projetoweb2.config;
 
-import com.bti.projetoweb2.funcionarios.entities.Funcionario;
-import com.bti.projetoweb2.funcionarios.entities.TipoVinculo;
-import com.bti.projetoweb2.funcionarios.repositories.FuncionarioRepository;
-import com.bti.projetoweb2.professores.entities.NivelAcademico;
-import com.bti.projetoweb2.professores.entities.Professor;
-import com.bti.projetoweb2.professores.repositories.ProfessorRepository;
+import com.bti.projetoweb2.entities.Funcionario;
+import com.bti.projetoweb2.entities.TipoVinculo;
+import com.bti.projetoweb2.repositories.FuncionarioRepository;
+import com.bti.projetoweb2.entities.NivelAcademico;
+import com.bti.projetoweb2.entities.Professor;
+import com.bti.projetoweb2.repositories.ProfessorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -47,24 +47,24 @@ public class DatabaseSeeder implements CommandLineRunner {
             funcionarioRepository.save(f2);
         }
 
-        if (professorRepository.count() == 0) {
+        // if (professorRepository.count() == 0) {
 
-            Professor p1 = new Professor(
-                    "Mariana Filho",
-                    "99988877766",
-                    "Biologia Marinha",
-                    NivelAcademico.GRADUACAO
-            );
+        //     Professor p1 = new Professor(
+        //             "Mariana Filho",
+        //             "99988877766",
+        //             "Biologia Marinha",
+        //             NivelAcademico.GRADUACAO
+        //     );
 
-            Professor p2 = new Professor(
-                    "Carlos Mendes",
-                    "33322211100",
-                    "Epedemiologia",
-                    NivelAcademico.DOUTORADO
-            );
+        //     Professor p2 = new Professor(
+        //             "Carlos Mendes",
+        //             "33322211100",
+        //             "Epedemiologia",
+        //             NivelAcademico.DOUTORADO
+        //     );
 
-            professorRepository.save(p1);
-            professorRepository.save(p2);
-        }
+        //     professorRepository.save(p1);
+        //     professorRepository.save(p2);
+        // }
     }
 }

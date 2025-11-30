@@ -1,0 +1,32 @@
+/* ===== SIDEBAR ===== */
+
+.sidebar {
+  width: 240px;
+  background: var(--primary);
+  color: #fff;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.sidebar a {
+  padding: 12px 20px;
+  text-decoration: none;
+  color: #fff;
+  font-size: 15px;
+  border-radius: var(--radius);
+  transition: 0.2s;
+}
+
+.sidebar a:hover {
+  background: var(--primary-dark);
+}
+
+.sidebar a.active {
+  background: #005f86;
+  font-weight: 700;
+}

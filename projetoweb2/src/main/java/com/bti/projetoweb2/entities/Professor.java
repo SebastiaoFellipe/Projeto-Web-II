@@ -1,0 +1,32 @@
+package com.bti.projetoweb2.entities;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "professores")
+public class Professor extends Funcionario {
+
+    @NotBlank(message = "A disciplina é obrigatória.")
+    private String areaAplicada;
+
+    @NotNull(message = "O nível de ensino é obrigatório.")
+    @Enumerated(EnumType.STRING)
+    private NivelAcademico nivelAcademico;
+
+    public Professor() {}
+
+    public Professor(String nome, String cpf, String cargo, TipoVinculo tipoVinculo, String areaAplicada, NivelAcademico nivelAcademico) {
+        super(nome, cpf, cargo, tipoVinculo);
+        this.areaAplicada = areaAplicada;
+        this.nivelAcademico = nivelAcademico;
+    }
+
+    public String getAreaAplicada() { return areaAplicada; }
+    public void setAreaAplicada(String disciplina) { this.areaAplicada = disciplina; }
+
+    public NivelAcademico getNivelAcademico() { return nivelAcademico; }
+    public void setNivelAcademico(NivelAcademico nivelEnsino) { this.nivelAcademico = nivelEnsino; }
+    
+}

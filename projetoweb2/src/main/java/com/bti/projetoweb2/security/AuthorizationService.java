@@ -1,11 +1,10 @@
-package com.bti.projetoweb2.security; // Ou com.bti.projetoweb2.security
+package com.bti.projetoweb2.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import com.bti.projetoweb2.repositories.UserRepository;
 
 @Service
@@ -16,10 +15,7 @@ public class AuthorizationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        UserDetails user = userRepository.findByLogin(login);
-        if (user == null) {
-            throw new UsernameNotFoundException("Usuário não encontrado: " + login);
-        }
-        return user;
+        return userRepository.findByLogin(login)
+                             .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + login));
     }
 }

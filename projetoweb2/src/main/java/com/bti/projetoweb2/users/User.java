@@ -2,7 +2,9 @@ package com.bti.projetoweb2.users;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,10 +18,12 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table(name = "users")
 @Entity(name = "User")
 @Getter
+@Setter 
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -38,10 +42,6 @@ public class User implements UserDetails {
         this.password = password;
         this.role = role;
     }
-    /**
-     * Retorna as autoridades concedidas ao usuário.
-     * Mapeia o campo 'role' para uma lista de autoridades do Spring Security.
-     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
@@ -52,17 +52,11 @@ public class User implements UserDetails {
         }
     }
 
-    /**
-     * Retorna o campo que o Spring Security deve usar como nome de usuário/login.
-     */
     @Override
     public String getUsername() {
         return login;
     }
 
-    /**
-     * Retorna o campo da senha.
-     */
     @Override
     public String getPassword() {
         return password;
@@ -87,5 +81,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public interface UserRepository extends JpaRepository<User, String> {
+        Optional<User> findByLogin(String login); 
     }
 }

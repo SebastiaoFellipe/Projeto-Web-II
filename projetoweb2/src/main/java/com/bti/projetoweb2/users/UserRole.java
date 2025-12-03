@@ -2,7 +2,9 @@ package com.bti.projetoweb2.users;
 
 public enum UserRole {
     ADMIN("admin"),
-    USER("user");
+    CANDIDATO("candidato"),
+    PROFESSOR("professor"),
+    FUNCIONARIO_COMUM("funcionario");
 
     private String role;
 

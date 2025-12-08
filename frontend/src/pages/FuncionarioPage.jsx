@@ -48,7 +48,6 @@ export default function FuncionarioPage() {
 
   useEffect(() => {
     fetch();
-    // eslint-disable-next-line
   }, []);
 
   const handleCreate = () => {

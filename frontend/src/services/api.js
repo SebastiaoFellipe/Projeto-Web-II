@@ -1,54 +1,58 @@
 import axios from 'axios';
 
-// Configuração base da API
 const api = axios.create({
-  baseURL: 'http://localhost:8081/api', // A porta do seu Spring Boot
+  baseURL: 'http://localhost:8081/api',
 });
 
-/**
- * Função genérica para buscar dados
- * @param {string} endpoint - O endpoint da API (ex: '/funcionarios')
- * @returns {Promise<Array>} - Uma promessa que resolve para a lista de itens
- */
-export const getItens = async (endpoint) => {
-  const response = await api.get(endpoint);
-  // A API de paginação retorna os dados em 'content'
-  if (response.data && typeof response.data.content !== 'undefined') {
-    return response.data.content;
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-  // Retorno padrão para APIs não paginadas
+  return config;
+});
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && (error.response.status === 403 || error.response.status === 401)) {
+      localStorage.clear();
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
+export const loginUser = async (data) => {
+  const response = await axios.post('http://localhost:8081/auth/login', data);
   return response.data;
 };
 
-/**
- * Função genérica para criar um item
- * @param {string} endpoint - O endpoint da API
- * @param {object} data - O objeto a ser criado
- * @returns {Promise<object>} - O item criado
- */
+export const registerUser = async (data) => {
+  const response = await axios.post('http://localhost:8081/auth/register', data);
+  return response.data;
+};
+
+export const getItens = async (endpoint) => {
+  const response = await api.get(endpoint);
+  if (response.data && typeof response.data.content !== 'undefined') {
+    return response.data.content;
+  }
+  return response.data;
+};
+
 export const createItem = async (endpoint, data) => {
   const response = await api.post(endpoint, data);
   return response.data;
 };
 
-/**
- * Função genérica para atualizar um item
- * @param {string} endpoint - O endpoint da API
- * @param {number|string} id - O ID do item
- * @param {object} data - O objeto com as atualizações
- * @returns {Promise<object>} - O item atualizado
- */
 export const updateItem = async (endpoint, id, data) => {
   const response = await api.put(`${endpoint}/${id}`, data);
   return response.data;
 };
 
-/**
- * Função genérica para excluir um item
- * @param {string} endpoint - O endpoint da API
- * @param {number|string} id - O ID do item
- * @returns {Promise<void>}
- */
 export const deleteItem = async (endpoint, id) => {
   await api.delete(`${endpoint}/${id}`);
 };
+
+export default api;

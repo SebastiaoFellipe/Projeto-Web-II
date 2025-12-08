@@ -67,7 +67,6 @@ export default function AnimalPage() {
     } catch (err) { setError("Erro ao salvar: " + err.message); }
   };
 
-  // --- Função para formatar a data ---
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
@@ -88,7 +87,6 @@ export default function AnimalPage() {
 
       <div className="table-container">
         <table>
-          {/* ===== CABEÇALHO ATUALIZADO ===== */}
           <thead>
             <tr>
               <th>ID</th>
@@ -106,7 +104,6 @@ export default function AnimalPage() {
             </tr>
           </thead>
           
-          {/* ===== CORPO DA TABELA ATUALIZADO ===== */}
           <tbody>
             {items.map((it) => (
               <tr key={it.id}>
@@ -119,7 +116,7 @@ export default function AnimalPage() {
                 <td>{it.classificacao}</td>
                 <td>{it.dieta}</td>
                 <td>{it.statusSaude}</td>
-                <td>{formatDate(it.dataEntrada)}</td> {/* Data formatada */}
+                <td>{formatDate(it.dataEntrada)}</td>
                 <td>{it.idade}</td>
                 <td style={{ textAlign: "right" }}>
                   <button className="btn btn-secondary" onClick={() => handleEdit(it)} style={{ marginRight: 8 }}>Editar</button>
@@ -128,10 +125,9 @@ export default function AnimalPage() {
               </tr>
             ))}
             
-            {/* ===== COLSPAN ATUALIZADO ===== */}
             {items.length === 0 && (
               <tr>
-                <td colSpan={12} style={{ padding: 16 }}> {/* MUDADO DE 6 PARA 12 */}
+                <td colSpan={12} style={{ padding: 16 }}>
                   Nenhum registro.
                 </td>
               </tr>

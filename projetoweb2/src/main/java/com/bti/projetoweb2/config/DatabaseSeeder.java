@@ -50,19 +50,19 @@ public class DatabaseSeeder implements CommandLineRunner {
             professorRepository.saveAll(java.util.List.of(p1, p2));
         }
 
-        if (!userRepository.findByLogin("teste_jwt").isPresent()) {
-            System.out.println("Criando usuário de teste para JWT...");
+        if (userRepository.findByLogin("adm").isEmpty()) {
+            System.out.println("Criando usuário administrador padrão...");
 
             String encodedPassword = passwordEncoder.encode("123"); 
             
-            User testUser = new User();
-            testUser.setLogin("teste_jwt");
-            testUser.setPassword(encodedPassword);
-            testUser.setRole(UserRole.ADMIN);
+            User admin = new User();
+            admin.setLogin("adm");
+            admin.setPassword(encodedPassword);
+            admin.setRole(UserRole.ADMIN);
             
-            userRepository.save(testUser); 
+            userRepository.save(admin); 
             
-            System.out.println("Usuário de teste JWT ('teste_jwt' / '123') criado com sucesso!");
+            System.out.println("Usuário ADMIN criado com sucesso: Login: 'adm' / Senha: '123'");
         }
     }
 }

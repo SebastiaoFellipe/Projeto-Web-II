@@ -20,10 +20,6 @@ public class EstoqueService {
     public Page<Estoque> listarTodos(Pageable pageable) {
         Page<Estoque> estoque = estoqueRepository.findAll(pageable);
 
-        if (estoque.isEmpty()) {
-            throw new EntityNotFoundException("Nenhuma estoque encontrado");
-        }
-
         return estoque;
     }
 

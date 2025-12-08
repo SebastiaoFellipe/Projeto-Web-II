@@ -26,10 +26,6 @@ public class AnimalService {
     public Page<Animal> listarTodos(Pageable pageable) {
         Page<Animal> animais = animalRepository.findAll(pageable);
 
-        if (animais.isEmpty()) {
-            throw new EntityNotFoundException("Nenhum animal encontrado");
-        }
-
         return animais;
     }
 

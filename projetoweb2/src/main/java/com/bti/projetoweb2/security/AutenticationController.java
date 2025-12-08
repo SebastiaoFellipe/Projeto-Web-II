@@ -1,5 +1,6 @@
 package com.bti.projetoweb2.security;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +17,13 @@ import com.bti.projetoweb2.users.AutenticationDTO;
 import com.bti.projetoweb2.users.LoginResponseDTO;
 import com.bti.projetoweb2.users.RegisterDTO;
 import com.bti.projetoweb2.users.User;
+import com.bti.projetoweb2.users.UserRole;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "*")
 public class AutenticationController {
 
     @Autowired
@@ -35,19 +38,26 @@ public class AutenticationController {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         Authentication auth = this.authenticationManager.authenticate(usernamePassword);
         
+        User user = (User) auth.getPrincipal();
         String token = tokenService.generateToken((User) auth.getPrincipal());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        return ResponseEntity.ok(new LoginResponseDTO(token, user.getRole().name()));
     }
     
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO data) {
-        if (this.userRepository.findByLogin(data.login()) != null) {
+        if (this.userRepository.findByLogin(data.login()).isPresent()) {
             return ResponseEntity.badRequest().body("Usuário já existe");
         }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        var newUser = new User(data.login(), encryptedPassword, data.role());
+        UserRole role;
+        try {
+            role = UserRole.valueOf(data.role()); 
+        } catch (IllegalArgumentException | NullPointerException e) {
+            role = UserRole.FUNCIONARIO_COMUM; 
+        }
+        var newUser = new User(data.login(), encryptedPassword, role);
         this.userRepository.save(newUser);
 
 

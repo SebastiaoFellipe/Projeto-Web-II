@@ -1,6 +1,11 @@
 package com.bti.projetoweb2.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bti.projetoweb2.entities.Professor;
 import com.bti.projetoweb2.repositories.ProfessorRepository;
@@ -17,8 +22,11 @@ public class ProfessorService {
         this.professorRepository = professorRepository;
     }
 
-    public List<Professor> listarTodos() {
-        return professorRepository.findAll();
+    public Page<Professor> listarTodos(String nome, Pageable pageable) {
+        if (nome != null && !nome.isEmpty()) {
+            return professorRepository.findByNomeContainingIgnoreCase(nome, pageable);
+        }
+        return professorRepository.findAll(pageable);
     }
 
     public Optional<Professor> buscarPorId(Long id) {

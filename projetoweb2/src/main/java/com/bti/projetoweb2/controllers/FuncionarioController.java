@@ -3,6 +3,9 @@ package com.bti.projetoweb2.controllers;
 import com.bti.projetoweb2.entities.Funcionario;
 import com.bti.projetoweb2.services.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +20,9 @@ public class FuncionarioController {
     private FuncionarioService funcionarioService;
 
     @GetMapping
-    public List<Funcionario> listarFuncionarios() {
-        return funcionarioService.listarTodos();
+    public Page<Funcionario> listarFuncionarios(@RequestParam(required = false) String nome, 
+                                                @PageableDefault(size = 5) Pageable pageable) {
+        return funcionarioService.listarTodos(nome, pageable);
     }
 
     @GetMapping("/{id}")

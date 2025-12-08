@@ -2,7 +2,10 @@ package com.bti.projetoweb2.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bti.projetoweb2.entities.Candidato;
 import com.bti.projetoweb2.repositories.CandidatoRepository;
@@ -15,10 +18,11 @@ public class CandidatoService {
         this.candidatoRepository = candidatoRepository;
     }
 
-    public Page<Candidato> listarTodos(Pageable pageable) {
-        Page<Candidato> candidatos = candidatoRepository.findAll(pageable);
-
-        return candidatos;
+    public Page<Candidato> listarTodos(String nome, Pageable pageable) {
+        if (nome != null && !nome.isEmpty()) {
+            return candidatoRepository.findByNomeContainingIgnoreCase(nome, pageable);
+        }
+        return candidatoRepository.findAll(pageable);
     }
 
     public Candidato buscarPorId(Long id) {

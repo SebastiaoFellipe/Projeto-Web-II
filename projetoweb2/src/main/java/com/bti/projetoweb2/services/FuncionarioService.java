@@ -3,6 +3,8 @@ package com.bti.projetoweb2.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.bti.projetoweb2.entities.Funcionario;
@@ -17,8 +19,11 @@ public class FuncionarioService {
         this.funcionarioRepository = funcionarioRepository;
     }
 
-    public List<Funcionario> listarTodos() {
-        return funcionarioRepository.findAll();
+    public Page<Funcionario> listarTodos(String nome, Pageable pageable) {
+        if (nome != null && !nome.isEmpty()) {
+            return funcionarioRepository.findByNomeContainingIgnoreCase(nome, pageable);
+        }
+        return funcionarioRepository.findAll(pageable);
     }
 
     public Optional<Funcionario> buscarPorId(Long id) {

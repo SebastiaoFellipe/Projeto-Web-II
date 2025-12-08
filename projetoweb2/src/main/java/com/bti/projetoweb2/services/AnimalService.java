@@ -3,8 +3,11 @@ package com.bti.projetoweb2.services;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 
 import com.bti.projetoweb2.entities.Animal;
 import com.bti.projetoweb2.entities.Habitat;
@@ -23,10 +26,11 @@ public class AnimalService {
         this.habitatRepository = habitatRepository;
     }
 
-    public Page<Animal> listarTodos(Pageable pageable) {
-        Page<Animal> animais = animalRepository.findAll(pageable);
-
-        return animais;
+    public Page<Animal> listarTodos(String nome, Pageable pageable) {
+        if (nome != null && !nome.isEmpty()) {
+            return animalRepository.findByNomeContainingIgnoreCase(nome, pageable);
+        }
+        return animalRepository.findAll(pageable);
     }
 
     public Animal buscarPorId(Long id) {

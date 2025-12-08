@@ -10,11 +10,5 @@ import org.springframework.data.repository.query.Param;
 import com.bti.projetoweb2.entities.Visita;
 
 public interface VisitaRepository extends JpaRepository<Visita, Integer> {
-
-    // Busca por nome (ignorando maiúsculas/minúsculas)
-    List<Visita> findByNomeContainingIgnoreCase(String parteNome);
-
-    // Busca por data (com paginação)
-    @Query("SELECT v FROM Visita v WHERE v.data LIKE %:data%")
-    Page<Visita> searchByDataLike(@Param("data") String data, Pageable pageable);
+    Page<Visita> findByNomeContainingIgnoreCase(String nome, Pageable pageable);
 }

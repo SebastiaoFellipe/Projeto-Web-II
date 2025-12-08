@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "funcionarios")
 public class Funcionario extends Pessoa {
@@ -18,9 +20,11 @@ public class Funcionario extends Pessoa {
     private TipoVinculo tipoVinculo;
 
     @ManyToMany(mappedBy = "funcionarios")
+    @JsonIgnore
     private Set<Visita> visitas = new HashSet<>();
     
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<Palestra> palestras = new HashSet<>();
     
     public Funcionario() {}

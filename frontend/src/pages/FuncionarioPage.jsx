@@ -11,138 +11,83 @@ const fields = [
   { name: "cpf", label: "CPF" },
   { name: "cargo", label: "Cargo" },
   {
-    name: "tipoVinculo",
-    label: "Vínculo",
-    type: "select",
-    options: [
-      { value: "FIXO", label: "Fixo" },
-      { value: "TEMPORARIO", label: "Temporário" },
-      { value: "ESTAGIARIO", label: "Estagiário" },
-    ],
+    name: "tipoVinculo", label: "Vínculo", type: "select",
+    options: [{ value: "FIXO", label: "Fixo" }, { value: "TEMPORARIO", label: "Temporário" }, { value: "ESTAGIARIO", label: "Estagiário" }]
   },
 ];
 
-const empty = { nome: "", cpf: "", cargo: "", tipoVinculo: "" };
+const empty = { nome: "", cpf: "", cargo: "", tipoVinculo: "FIXO" };
 
 export default function FuncionarioPage() {
   const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
   const [current, setCurrent] = useState(empty);
+  const [isEditing, setIsEditing] = useState(false);
 
   const fetch = async () => {
     try {
-      setLoading(true);
-      const data = await getItens(API_ENDPOINT);
-      setItems(data || []);
-      setError(null);
-    } catch (err) {
-      setError("Erro ao buscar: " + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetch();
-  }, []);
-
-  const handleCreate = () => {
-    setCurrent(empty);
-    setIsEditing(false);
-    setIsModalOpen(true);
-  };
-
-  const handleEdit = (item) => {
-    setCurrent(item);
-    setIsEditing(true);
-    setIsModalOpen(true);
-  };
-
-  const handleDelete = async (id) => {
-    if (!window.confirm("Tem certeza que deseja excluir?")) return;
-    try {
-      await deleteItem(API_ENDPOINT, id);
-      fetch();
-    } catch (err) {
-      setError("Erro ao excluir: " + err.message);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      if (isEditing) {
-        await updateItem(API_ENDPOINT, current.id, current);
+      const data = await getItens(API_ENDPOINT, { page, size: 5, nome: searchTerm });
+      if (data.content) {
+        setItems(data.content);
+        setTotalPages(data.totalPages);
       } else {
-        await createItem(API_ENDPOINT, current);
+        setItems(data || []);
       }
-      fetch();
-      setIsModalOpen(false);
-    } catch (err) {
-      setError("Erro ao salvar: " + err.message);
-    }
+    } catch (err) { console.error(err); }
   };
 
-  if (loading) return <div className="container">Carregando...</div>;
+  useEffect(() => { fetch(); }, [page]);
+
+  const handleSearch = (e) => { e.preventDefault(); setPage(0); fetch(); };
+  const handleSave = async (e) => {
+    e.preventDefault();
+    if (isEditing) await updateItem(API_ENDPOINT, current.id, current);
+    else await createItem(API_ENDPOINT, current);
+    setIsModalOpen(false); fetch();
+  };
+  const handleDelete = async (id) => { if (confirm("Excluir?")) { await deleteItem(API_ENDPOINT, id); fetch(); } };
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16 }}>
         <h1>Gerenciar {ENTITY}s</h1>
-        <button className="btn btn-primary" onClick={handleCreate}>Adicionar {ENTITY}</button>
+        <button className="btn btn-primary" onClick={() => { setCurrent(empty); setIsEditing(false); setIsModalOpen(true); }}>Novo</button>
       </div>
 
-      {error && <div style={{ color: "crimson", marginBottom: 12 }}>{error}</div>}
+      <div style={{ marginBottom: 20, display: 'flex', gap: 10 }}>
+        <input type="text" placeholder="Buscar por nome..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} style={{ padding: 8, flex: 1, border: '1px solid #ccc', borderRadius: 4 }} />
+        <button className="btn btn-secondary" onClick={handleSearch}>Buscar</button>
+      </div>
 
       <div className="table-container">
         <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>CPF</th>
-              <th>Cargo</th>
-              <th>Vínculo</th>
-              <th style={{ textAlign: "right" }}>Ações</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Nome</th><th>CPF</th><th>Cargo</th><th>Vínculo</th><th>Ações</th></tr></thead>
           <tbody>
             {items.map((it) => (
               <tr key={it.id}>
-                <td>{it.id}</td>
-                <td>{it.nome}</td>
-                <td>{it.cpf}</td>
-                <td>{it.cargo}</td>
-                <td>{it.tipoVinculo}</td>
-                <td style={{ textAlign: "right" }}>
-                  <button className="btn btn-secondary" onClick={() => handleEdit(it)} style={{ marginRight: 8 }}>
-                    Editar
-                  </button>
-                  <button
-                    className="btn"
-                    onClick={() => handleDelete(it.id)}
-                    style={{ background: "#e03131", color: "#fff", border: "none" }}
-                  >
-                    Excluir
-                  </button>
+                <td>{it.nome}</td><td>{it.cpf}</td><td>{it.cargo}</td><td>{it.tipoVinculo}</td>
+                <td>
+                  <button className="btn btn-secondary" onClick={() => { setCurrent(it); setIsEditing(true); setIsModalOpen(true); }} style={{marginRight: 8}}>Editar</button>
+                  <button className="btn" style={{ background: "#e03131", color: "#fff" }} onClick={() => handleDelete(it.id)}>Excluir</button>
                 </td>
               </tr>
             ))}
-            {items.length === 0 && (
-              <tr>
-                <td colSpan={6} style={{ padding: 16 }}>Nenhum registro encontrado.</td>
-              </tr>
-            )}
+            {items.length === 0 && <tr><td colSpan={5} style={{ padding: 16 }}>Nenhum registro.</td></tr>}
           </tbody>
         </table>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={isEditing ? `Editar ${ENTITY}` : `Novo ${ENTITY}`}>
-        <CrudForm entity={current} setEntity={setCurrent} fields={fields} onSubmit={handleSubmit} onCancel={() => setIsModalOpen(false)} />
+      <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', gap: 15, alignItems: 'center' }}>
+        <button className="btn btn-secondary" disabled={page === 0} onClick={() => setPage(p => p - 1)}>Anterior</button>
+        <span>Página {page + 1} de {totalPages || 1}</span>
+        <button className="btn btn-secondary" disabled={page >= totalPages - 1} onClick={() => setPage(p => p + 1)}>Próximo</button>
+      </div>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={isEditing ? "Editar" : "Novo"}>
+        <CrudForm entity={current} setEntity={setCurrent} fields={fields} onSubmit={handleSave} onCancel={() => setIsModalOpen(false)} />
       </Modal>
     </div>
   );

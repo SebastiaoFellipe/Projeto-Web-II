@@ -3,6 +3,7 @@ package com.bti.projetoweb2.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,9 @@ public class PalestraController {
     private PalestraService palestraService;
 
     @GetMapping
-    public Page<Palestra> listarPalestras(Pageable pageable) {
-        return palestraService.listarPalestra(pageable);
+    public Page<Palestra> listarPalestras(@RequestParam(required = false) String tema, 
+                                        @PageableDefault(size = 5) Pageable pageable) {
+        return palestraService.listarTodos(tema, pageable);
     }
 
     @GetMapping("/{id}")

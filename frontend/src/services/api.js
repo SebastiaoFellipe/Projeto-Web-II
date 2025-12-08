@@ -33,9 +33,9 @@ export const registerUser = async (data) => {
   return response.data;
 };
 
-export const getItens = async (endpoint) => {
-  const response = await api.get(endpoint);
-  if (response.data && typeof response.data.content !== 'undefined') {
+export const getItens = async (endpoint, params = {}) => {
+  const response = await api.get(endpoint, { params });
+  if (Object.keys(params).length === 0 && response.data && response.data.content) {
     return response.data.content;
   }
   return response.data;

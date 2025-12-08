@@ -3,6 +3,9 @@ package com.bti.projetoweb2.controllers;
 import com.bti.projetoweb2.entities.Professor;
 import com.bti.projetoweb2.services.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +20,9 @@ public class ProfessorController {
     private ProfessorService professorService;
 
     @GetMapping
-    public List<Professor> listProfessores() {
-        return professorService.listarTodos();
+    public Page<Professor> listProfessores(@RequestParam(required = false) String nome, 
+                                            @PageableDefault(size = 5) Pageable pageable) {
+        return professorService.listarTodos(nome, pageable);
     }
 
     @GetMapping("/{id}")

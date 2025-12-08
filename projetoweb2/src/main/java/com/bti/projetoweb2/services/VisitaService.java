@@ -24,6 +24,13 @@ public class VisitaService {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
+    public Page<Visita> listarTodos(String nome, Pageable pageable) {
+        if (nome != null && !nome.isEmpty()) {
+            return visitaRepository.findByNomeContainingIgnoreCase(nome, pageable); 
+        }
+        return visitaRepository.findAll(pageable);
+    }
+
     public Page<Visita> listarVisitas(Pageable pageable) {
         return visitaRepository.findAll(pageable);
     }
@@ -48,9 +55,5 @@ public class VisitaService {
 
     public void deletarVisita(Integer id) {
         visitaRepository.deleteById(id);
-    }
-
-    public Page<Visita> buscarPorData(String data, Pageable pageable) {
-        return visitaRepository.searchByDataLike(data, pageable);
     }
 }

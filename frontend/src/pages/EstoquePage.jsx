@@ -54,7 +54,7 @@ export default function EstoquePage() {
         <input type="text" placeholder="Buscar produto..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} style={{ padding: 8, flex: 1, border: '1px solid #ccc', borderRadius: 4 }} />
         <button className="btn btn-secondary" onClick={handleSearch}>Buscar</button>
       </div>
-      <div className="table-container">
+      <div className="table-container" style={{ overflowX: "auto" }}>
         <table>
           <thead><tr><th>Produto</th><th>Código</th><th>Qtd</th><th>Validade</th><th>Ações</th></tr></thead>
           <tbody>

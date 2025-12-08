@@ -4,17 +4,17 @@ import com.bti.projetoweb2.entities.*;
 import com.bti.projetoweb2.repositories.*;
 import com.bti.projetoweb2.users.User;
 import com.bti.projetoweb2.users.UserRole;
-// CORREÇÃO: Importar o repositório correto, não a interface interna de User
-import com.bti.projetoweb2.repositories.UserRepository; 
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import java.util.Set;
 
 @Component
 public class DatabaseSeeder implements CommandLineRunner {
@@ -61,6 +61,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         seedUsers();
         seedHabitats();
@@ -69,138 +70,160 @@ public class DatabaseSeeder implements CommandLineRunner {
         seedCandidatos();
         seedEstoque();
         seedAnimais();
-        seedPalestras();
         seedVisitas();
+        seedPalestras();
+        seedAlimentacao();
+        seedReabilitacao();
         
-        System.out.println("--- Seeding concluído: Garantido mínimo de 6 registros por entidade ---");
+        System.out.println("--- Seeding concluído com sucesso ---");
     }
 
     private void seedUsers() {
         if (userRepository.findByLogin("adm").isEmpty()) {
             User admin = new User("adm", passwordEncoder.encode("123"), UserRole.ADMIN);
             userRepository.save(admin);
-            System.out.println("Usuário ADMIN criado.");
         }
     }
 
     private void seedHabitats() {
-        long count = habitatRepository.count();
-        if (count < 6) {
+        if (habitatRepository.count() < 6) {
             List<Habitat> lista = new ArrayList<>();
-            for (int i = 0; i <= (6 - count); i++) {
-                String tipo = (i % 2 == 0) ? "Aquático" : "Terrestre";
-                lista.add(new Habitat("Habitat Auto " + generateSuffix(), tipo, 20.0 + i));
+            for (int i = 1; i <= 6; i++) {
+                lista.add(new Habitat("Habitat " + i, i % 2 == 0 ? "Aquático" : "Terrestre", 20.0 + i));
             }
             habitatRepository.saveAll(lista);
         }
     }
 
     private void seedFuncionarios() {
-        long count = funcionarioRepository.count();
-        if (count < 6) {
+        if (funcionarioRepository.count() < 6) {
             List<Funcionario> lista = new ArrayList<>();
-            for (int i = 0; i <= (6 - count); i++) {
-                lista.add(new Funcionario("Funcionario Auto " + generateSuffix(), generateCpf(), "Cargo Geral", TipoVinculo.FIXO));
+            for (int i = 1; i <= 6; i++) {
+                lista.add(new Funcionario("Funcionario " + i, generateCpf(), "Tratador", TipoVinculo.FIXO));
             }
             funcionarioRepository.saveAll(lista);
         }
     }
 
     private void seedProfessores() {
-        long count = professorRepository.count();
-        if (count < 6) {
+        if (professorRepository.count() < 6) {
             List<Professor> lista = new ArrayList<>();
-            for (int i = 0; i <= (6 - count); i++) {
-                lista.add(new Professor("Professor Auto " + generateSuffix(), generateCpf(), "Pesquisador", TipoVinculo.TEMPORARIO, "Biologia " + i, NivelAcademico.DOUTORADO));
+            for (int i = 1; i <= 6; i++) {
+                lista.add(new Professor("Professor " + i, generateCpf(), "Pesquisador", TipoVinculo.TEMPORARIO, "Biologia", NivelAcademico.MESTRADO));
             }
             professorRepository.saveAll(lista);
         }
     }
 
     private void seedCandidatos() {
-        long count = candidatoRepository.count();
-        if (count < 6) {
+        if (candidatoRepository.count() < 6) {
             List<Candidato> lista = new ArrayList<>();
-            for (int i = 0; i <= (6 - count); i++) {
-                lista.add(new Candidato("Candidato Auto " + generateSuffix(), generateCpf(), "Zoologia", "email" + generateSuffix() + "@teste.com"));
+            for (int i = 1; i <= 6; i++) {
+                lista.add(new Candidato("Candidato " + i, generateCpf(), "Zoologia", "email" + i + "@teste.com"));
             }
             candidatoRepository.saveAll(lista);
         }
     }
 
     private void seedEstoque() {
-        long count = estoqueRepository.count();
-        if (count < 6) {
+        if (estoqueRepository.count() < 6) {
             List<Estoque> lista = new ArrayList<>();
-            for (int i = 0; i <= (6 - count); i++) {
-                lista.add(new Estoque("COD-" + generateSuffix(), "Produto Auto " + i, 50, "un", LocalDate.now().plusMonths(6)));
+            for (int i = 1; i <= 6; i++) {
+                lista.add(new Estoque("COD-" + i, "Produto " + i, 100, "kg", LocalDate.now().plusMonths(6)));
             }
             estoqueRepository.saveAll(lista);
         }
     }
 
     private void seedAnimais() {
-        long count = animalRepository.count();
-        if (count < 6) {
+        if (animalRepository.count() < 6) {
             List<Habitat> habitats = habitatRepository.findAll();
             if (habitats.isEmpty()) return;
-
+            
             List<Animal> lista = new ArrayList<>();
-            Random rand = new Random();
-            for (int i = 0; i <= (6 - count); i++) {
-                Animal a = new Animal("Animal Auto " + generateSuffix(), "Cientifico", "Familia", "Genero", "Especie",
-                        Animal.Classificacao.NAO_AMEACADO, "Onívoro", "Saudável", java.sql.Date.valueOf(LocalDate.now()), 2);
-                a.setHabitat(habitats.get(rand.nextInt(habitats.size())));
+            for (int i = 1; i <= 6; i++) {
+                String dataHoje = LocalDate.now().toString();    
+                Animal a = new Animal("Animal " + i, "Cientifico", "Familia", "Genero", "Especie",
+                        Animal.Classificacao.NAO_AMEACADO, "Onívoro", "Saudável", dataHoje, 2);
+                a.setHabitat(habitats.get((i - 1) % habitats.size()));
                 lista.add(a);
             }
             animalRepository.saveAll(lista);
         }
     }
 
-    private void seedPalestras() {
-        long count = palestraRepository.count();
-        if (count < 6) {
-            List<Funcionario> funcs = funcionarioRepository.findAll();
-            
-            List<Palestra> lista = new ArrayList<>();
-            for (int i = 0; i <= (6 - count); i++) {
-                Palestra p = new Palestra();
-                p.setTema("Palestra Auto " + generateSuffix());
-                p.setData("2025-12-01");
-                p.setHorario("10:00");
-                p.setLocal("Auditório B");
-                p.setPalestrante("Dr. Seeder");
-                p.setFormacaoPalestrante("Biólogo");
-                p.setPublicoAlvo("Estudantes");
-                if (!funcs.isEmpty()) p.setFuncionario(funcs.get(0));
-                lista.add(p);
-            }
-            palestraRepository.saveAll(lista);
-        }
-    }
-
     private void seedVisitas() {
-        long count = visitaRepository.count();
-        if (count < 6) {
+        if (visitaRepository.count() < 6) {
+            List<Funcionario> funcs = funcionarioRepository.findAll();
             List<Visita> lista = new ArrayList<>();
-            for (int i = 0; i <= (6 - count); i++) {
+            
+            for (int i = 1; i <= 6; i++) {
                 Visita v = new Visita();
-                v.setNome("Visita Auto " + generateSuffix());
-                v.setData("2025-11-15");
-                v.setHora("14:00");
-                v.setInstituicao("Escola Estadual");
-                v.setQtdAlunos(15);
-                v.setTipoInstituicao("Pública");
+                v.setNome("Visita " + i);
+                v.setData("2025-12-0" + i);
+                v.setHora("08:00");
+                v.setInstituicao("Escola " + i);
+                v.setQtdAlunos(20);
                 v.setProfessorResponsavel("Prof. Visitante");
                 v.setTelefone("84 99999-9999");
+                if (!funcs.isEmpty()) {
+                    Set<Funcionario> equipe = new HashSet<>();
+                    equipe.add(funcs.get(i % funcs.size()));
+                    v.setFuncionarios(equipe);
+                }
                 lista.add(v);
             }
             visitaRepository.saveAll(lista);
         }
     }
 
-    private String generateSuffix() {
-        return String.valueOf(System.nanoTime() % 100000);
+    private void seedPalestras() {
+        if (palestraRepository.count() < 6) {
+            List<Funcionario> funcs = funcionarioRepository.findAll();
+            List<Palestra> lista = new ArrayList<>();
+            for (int i = 1; i <= 6; i++) {
+                Palestra p = new Palestra();
+                p.setTema("Palestra " + i);
+                p.setData("2025-11-20");
+                p.setHorario("10:00");
+                p.setLocal("Auditório");
+                p.setPalestrante("Dr. Teste");
+                p.setFormacaoPalestrante("Bio");
+                p.setPublicoAlvo("Geral");
+                if(!funcs.isEmpty()) p.setFuncionario(funcs.get(i % funcs.size()));
+                lista.add(p);
+            }
+            palestraRepository.saveAll(lista);
+        }
+    }
+
+    private void seedAlimentacao() {
+        if (alimentacaoRepository.count() < 6) {
+            List<Funcionario> funcs = funcionarioRepository.findAll();
+            List<Animal> anims = animalRepository.findAll();
+            List<Estoque> ests = estoqueRepository.findAll();
+            if (!funcs.isEmpty() && !anims.isEmpty() && !ests.isEmpty()) {
+                List<Alimentacao> lista = new ArrayList<>();
+                for (int i = 1; i <= 6; i++) {
+                    lista.add(new Alimentacao("Ração " + i, 1.0, LocalDate.now(), "Obs", funcs.get(0), anims.get(0), ests.get(0)));
+                }
+                alimentacaoRepository.saveAll(lista);
+            }
+        }
+    }
+
+    private void seedReabilitacao() {
+        if (reabilitacaoRepository.count() < 6) {
+            List<Funcionario> funcs = funcionarioRepository.findAll();
+            List<Animal> anims = animalRepository.findAll();
+            if (!funcs.isEmpty() && !anims.isEmpty()) {
+                List<Reabilitacao> lista = new ArrayList<>();
+                for (int i = 1; i <= 6; i++) {
+                    lista.add(new Reabilitacao(anims.get(0), "Motivo " + i, "Tratamento", java.sql.Date.valueOf(LocalDate.now()), null, "Em andamento", "Obs", funcs.get(0)));
+                }
+                reabilitacaoRepository.saveAll(lista);
+            }
+        }
     }
 
     private String generateCpf() {

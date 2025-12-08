@@ -52,7 +52,7 @@ export default function HabitatPage() {
         <input type="text" placeholder="Buscar por descrição..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} style={{ padding: 8, flex: 1, border: '1px solid #ccc', borderRadius: 4 }} />
         <button className="btn btn-secondary" onClick={handleSearch}>Buscar</button>
       </div>
-      <div className="table-container">
+      <div className="table-container" style={{ overflowX: "auto" }}>
         <table>
           <thead><tr><th>Descrição</th><th>Ambiente</th><th>Temperatura</th><th>Ações</th></tr></thead>
           <tbody>

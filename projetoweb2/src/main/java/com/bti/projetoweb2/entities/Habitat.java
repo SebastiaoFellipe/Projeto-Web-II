@@ -2,6 +2,7 @@ package com.bti.projetoweb2.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -31,7 +32,7 @@ public class Habitat {
     private double temperatura;
 
     @OneToMany(mappedBy = "habitat", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Animal> animals;
 
     public Habitat() {}

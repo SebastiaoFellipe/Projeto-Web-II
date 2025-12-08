@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -36,7 +37,7 @@ public class Animal {
 
     @ManyToOne
     @JoinColumn(name = "habitat_id")
-    @JsonBackReference
+    @JsonIgnoreProperties("animals")
     private Habitat habitat;
 
     @OneToMany(mappedBy = "animal")
@@ -74,15 +75,16 @@ public class Animal {
     private String statusSaude;
 
     @NotNull
-    @Temporal(TemporalType.DATE)
-    private Date dataEntrada;
+    // @Temporal(TemporalType.DATE)
+    // private Date dataEntrada;
+    private String dataEntrada;
 
     @NotNull(message = "A idade é obrigatória.")
     private Integer idade;
 
     public Animal() {}
 
-    public Animal(String nome, String nomeCientifico, String familia, String genero, String especie, Classificacao classificacao, String dieta, String statusSaude, Date dataEntrada, int idade) {
+    public Animal(String nome, String nomeCientifico, String familia, String genero, String especie, Classificacao classificacao, String dieta, String statusSaude, String dataEntrada, int idade) {
         this.nome = nome;
         this.nomeCientifico = nomeCientifico;
         this.familia = familia;
@@ -167,11 +169,11 @@ public class Animal {
         this.statusSaude = statusSaude;
     }
 
-    public Date getDataEntrada() {
+    public String getDataEntrada() {
         return dataEntrada;
     }
 
-    public void setDataEntrada(Date dataEntrada) {
+    public void setDataEntrada(String dataEntrada) {
         this.dataEntrada = dataEntrada;
     }
 

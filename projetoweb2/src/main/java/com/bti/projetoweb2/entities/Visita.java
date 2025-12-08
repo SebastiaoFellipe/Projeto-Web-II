@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "visitas")
 public class Visita {
@@ -25,7 +27,7 @@ public class Visita {
     private String professorResponsavel;
 
     @Min(value = 3, message = "A quantidade mínima de alunos é 3")
-    @Max(value = 21, message = "A quantidade máxima de alunos é 21")
+    @Max(value = 100, message = "A quantidade máxima de alunos é 100")
     private int qtdAlunos;
 
     private String telefone;
@@ -36,6 +38,7 @@ public class Visita {
         joinColumns = @JoinColumn(name = "visita_id"),
         inverseJoinColumns = @JoinColumn(name = "funcionario_id")
     )
+    @JsonIgnoreProperties("visitas")
     private Set<Funcionario> funcionarios = new HashSet<>();
 
     public Visita() {}

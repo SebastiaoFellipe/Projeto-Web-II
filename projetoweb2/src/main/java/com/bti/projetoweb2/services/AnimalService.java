@@ -58,17 +58,12 @@ public class AnimalService {
     }
 
     public Animal salvar(Animal animal) {
-        if (animal.getHabitat() != null) {
-            String descricao = animal.getHabitat().getDescricao();
-            Double temperatura = animal.getHabitat().getTemperatura();
-            Habitat habitatExistente = habitatRepository.findByDescricao(descricao);
-            
-            if (habitatExistente != null && temperatura.equals(habitatExistente.getTemperatura())) {
-                animal.setHabitat(habitatExistente);
-            } else {
-                Habitat novoHabitat = habitatRepository.save(animal.getHabitat());
-                animal.setHabitat(novoHabitat);
-            }
+        if (animal.getHabitat() != null && animal.getHabitat().getId() != null) {
+            Habitat habitat = habitatRepository.findById(animal.getHabitat().getId())
+                    .orElseThrow(() -> new RuntimeException("Habitat não encontrado"));
+            animal.setHabitat(habitat);
+        } else {
+            animal.setHabitat(null);
         }
         return animalRepository.save(animal);
     }
@@ -76,21 +71,6 @@ public class AnimalService {
     public Animal atualizar(Long id, Animal animalAtualizado) {
         return animalRepository.findById(id)
             .map(animal -> {
-                if (animalAtualizado.getHabitat() != null) {
-                    String descricao = animalAtualizado.getHabitat().getDescricao();
-                    Double temperatura = animalAtualizado.getHabitat().getTemperatura();
-                    Habitat habitatExistente = habitatRepository.findByDescricao(descricao);
-
-                    if (habitatExistente != null && temperatura.equals(habitatExistente.getTemperatura())) {
-                        animal.setHabitat(habitatExistente);
-                    } else {
-                        Habitat novoHabitat = habitatRepository.save(animalAtualizado.getHabitat());
-                        animal.setHabitat(novoHabitat);
-                    }
-                } else {
-                    animal.setHabitat(null);
-                }
-
                 animal.setNome(animalAtualizado.getNome());
                 animal.setNomeCientifico(animalAtualizado.getNomeCientifico());
                 animal.setEspecie(animalAtualizado.getEspecie());
@@ -101,6 +81,14 @@ public class AnimalService {
                 animal.setStatusSaude(animalAtualizado.getStatusSaude());
                 animal.setDataEntrada(animalAtualizado.getDataEntrada());
                 animal.setIdade(animalAtualizado.getIdade());
+
+                if (animalAtualizado.getHabitat() != null && animalAtualizado.getHabitat().getId() != null) {
+                    Habitat habitat = habitatRepository.findById(animalAtualizado.getHabitat().getId())
+                            .orElseThrow(() -> new RuntimeException("Habitat não encontrado"));
+                    animal.setHabitat(habitat);
+                } else {
+                    animal.setHabitat(null);
+                }
 
                 return animalRepository.save(animal);
             })

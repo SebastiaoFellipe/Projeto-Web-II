@@ -41,13 +41,13 @@ export const getItens = async (endpoint, params = {}) => {
   return response.data;
 };
 
-export const createItem = async (endpoint, data) => {
-  const response = await api.post(endpoint, data);
+export const createItem = async (endpoint, data, config = {}) => {
+  const response = await api.post(endpoint, data, config);
   return response.data;
 };
 
-export const updateItem = async (endpoint, id, data) => {
-  const response = await api.put(`${endpoint}/${id}`, data);
+export const updateItem = async (endpoint, id, data, config = {}) => {
+  const response = await api.put(`${endpoint}/${id}`, data, config);
   return response.data;
 };
 

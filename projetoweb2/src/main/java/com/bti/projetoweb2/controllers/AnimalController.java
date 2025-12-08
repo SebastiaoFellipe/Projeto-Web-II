@@ -23,6 +23,7 @@ import com.bti.projetoweb2.services.AnimalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/animais")
@@ -143,7 +144,7 @@ public class AnimalController {
         @ApiResponse(responseCode = "400", description = "Dados inválidos"),
         @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
-    public Animal salvar(@RequestBody Animal animal) {
+    public Animal salvar(@RequestBody @Valid Animal animal) {
         return animalService.salvar(animal);
     }
 
@@ -158,7 +159,7 @@ public class AnimalController {
         @ApiResponse(responseCode = "404", description = "Animal não encontrado"),
         @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
-    public Animal atualizar(@PathVariable Long id, @RequestBody Animal animalAtualizado) {
+    public Animal atualizar(@PathVariable Long id, @RequestBody @Valid Animal animalAtualizado) {
         return animalService.atualizar(id, animalAtualizado);
     }
 

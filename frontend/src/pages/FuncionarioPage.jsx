@@ -14,7 +14,6 @@ const fields = [
     name: "tipoVinculo", label: "Vínculo", type: "select",
     options: [{ value: "FIXO", label: "Fixo" }, { value: "TEMPORARIO", label: "Temporário" }, { value: "ESTAGIARIO", label: "Estagiário" }]
   },
-  // Adicione campos extras se o backend suportar, ex: especialidade, setor
 ];
 
 const empty = { nome: "", cpf: "", cargo: "", tipoVinculo: "FIXO" };

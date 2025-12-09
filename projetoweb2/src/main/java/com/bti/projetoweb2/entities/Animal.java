@@ -75,8 +75,6 @@ public class Animal {
     private String statusSaude;
 
     @NotNull
-    // @Temporal(TemporalType.DATE)
-    // private Date dataEntrada;
     private String dataEntrada;
 
     @NotNull(message = "A idade é obrigatória.")

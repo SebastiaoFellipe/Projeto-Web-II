@@ -1,6 +1,5 @@
 function FormInput({ field, value, onChange }) {
   const handleChange = (e) => {
-    // Tratamento para multi-select
     if (field.multiple) {
       const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
       onChange(field.name, selectedOptions);

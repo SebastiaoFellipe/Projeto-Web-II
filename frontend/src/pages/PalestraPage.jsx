@@ -69,7 +69,6 @@ export default function PalestraPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // O backend espera "funcionarioId" no corpo para fazer o bind
     if (isEditing) {
       await updateItem(API_ENDPOINT, current.id, current);
       alert("Palestra atualizada com sucesso!");

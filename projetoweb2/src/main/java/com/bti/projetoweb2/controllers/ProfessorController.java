@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/professores")
@@ -52,7 +53,7 @@ public class ProfessorController {
         @ApiResponse(responseCode = "400", description = "Dados inválidos"),
         @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
-    public ResponseEntity<?> saveProfessor(@RequestBody Professor professor) {
+    public ResponseEntity<?> saveProfessor(@RequestBody @Valid Professor professor) {
         try {
             Professor salvo = professorService.salvar(professor);
             return ResponseEntity.ok(salvo);
@@ -68,7 +69,7 @@ public class ProfessorController {
         @ApiResponse(responseCode = "404", description = "Professor não encontrado"),
         @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
-    public ResponseEntity<Professor> atualizarProfessor(@PathVariable Long id, @RequestBody Professor professor) {
+    public ResponseEntity<Professor> atualizarProfessor(@PathVariable Long id, @RequestBody @Valid Professor professor) {
         Professor atualizado = professorService.atualizar(id, professor);
         return ResponseEntity.ok(atualizado);
     }
@@ -81,11 +82,7 @@ public class ProfessorController {
         @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
     public ResponseEntity<Void> deleteProfessor(@PathVariable Long id) {
-        try {
-            professorService.deletar(id);
-            return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        professorService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }

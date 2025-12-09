@@ -41,11 +41,17 @@ export default function FuncionarioPage() {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isEditing) await updateItem(API_ENDPOINT, current.id, current);
-    else await createItem(API_ENDPOINT, current);
+    if (isEditing) {
+      await updateItem(API_ENDPOINT, current.id, current);
+      alert("Funcionário atualizado com sucesso!");
+    }
+    else {
+      await createItem(API_ENDPOINT, current);
+      alert("Funcionário cadastrado com sucesso!");
+    }
     setIsModalOpen(false); fetch();
   };
-  const handleDelete = async (id) => { if (confirm("Excluir?")) { await deleteItem(API_ENDPOINT, id); fetch(); } };
+  const handleDelete = async (id) => { if (confirm("Excluir?")) { await deleteItem(API_ENDPOINT, id); alert("Funcionário excluído com sucesso!"); fetch(); } };
 
   return (
     <div>

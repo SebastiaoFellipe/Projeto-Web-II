@@ -72,8 +72,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         seedAnimais();
         seedVisitas();
         seedPalestras();
-        seedAlimentacao();
-        seedReabilitacao();
+        // seedAlimentacao();
+        // seedReabilitacao();
         
         System.out.println("--- Seeding concluído com sucesso ---");
     }
@@ -197,34 +197,34 @@ public class DatabaseSeeder implements CommandLineRunner {
         }
     }
 
-    private void seedAlimentacao() {
-        if (alimentacaoRepository.count() < 6) {
-            List<Funcionario> funcs = funcionarioRepository.findAll();
-            List<Animal> anims = animalRepository.findAll();
-            List<Estoque> ests = estoqueRepository.findAll();
-            if (!funcs.isEmpty() && !anims.isEmpty() && !ests.isEmpty()) {
-                List<Alimentacao> lista = new ArrayList<>();
-                for (int i = 1; i <= 6; i++) {
-                    lista.add(new Alimentacao("Ração " + i, 1.0, LocalDate.now(), "Obs", funcs.get(0), anims.get(0), ests.get(0)));
-                }
-                alimentacaoRepository.saveAll(lista);
-            }
-        }
-    }
+    // private void seedAlimentacao() {
+    //     if (alimentacaoRepository.count() < 6) {
+    //         List<Funcionario> funcs = funcionarioRepository.findAll();
+    //         List<Animal> anims = animalRepository.findAll();
+    //         List<Estoque> ests = estoqueRepository.findAll();
+    //         if (!funcs.isEmpty() && !anims.isEmpty() && !ests.isEmpty()) {
+    //             List<Alimentacao> lista = new ArrayList<>();
+    //             for (int i = 1; i <= 6; i++) {
+    //                 lista.add(new Alimentacao("Ração " + i, 1.0, LocalDate.now(), "Obs", funcs.get(0), anims.get(0), ests.get(0)));
+    //             }
+    //             alimentacaoRepository.saveAll(lista);
+    //         }
+    //     }
+    // }
 
-    private void seedReabilitacao() {
-        if (reabilitacaoRepository.count() < 6) {
-            List<Funcionario> funcs = funcionarioRepository.findAll();
-            List<Animal> anims = animalRepository.findAll();
-            if (!funcs.isEmpty() && !anims.isEmpty()) {
-                List<Reabilitacao> lista = new ArrayList<>();
-                for (int i = 1; i <= 6; i++) {
-                    lista.add(new Reabilitacao(anims.get(0), "Motivo " + i, "Tratamento", java.sql.Date.valueOf(LocalDate.now()), null, "Em andamento", "Obs", funcs.get(0)));
-                }
-                reabilitacaoRepository.saveAll(lista);
-            }
-        }
-    }
+    // private void seedReabilitacao() {
+    //     if (reabilitacaoRepository.count() < 6) {
+    //         List<Funcionario> funcs = funcionarioRepository.findAll();
+    //         List<Animal> anims = animalRepository.findAll();
+    //         if (!funcs.isEmpty() && !anims.isEmpty()) {
+    //             List<Reabilitacao> lista = new ArrayList<>();
+    //             for (int i = 1; i <= 6; i++) {
+    //                 lista.add(new Reabilitacao(anims.get(0), "Motivo " + i, "Tratamento", java.sql.Date.valueOf(LocalDate.now()), null, "Em andamento", "Obs", funcs.get(0)));
+    //             }
+    //             reabilitacaoRepository.saveAll(lista);
+    //         }
+    //     }
+    // }
 
     private String generateCpf() {
         long randomNum = (long) (Math.random() * 90000000000L) + 10000000000L;

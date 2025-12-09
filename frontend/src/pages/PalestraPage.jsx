@@ -39,7 +39,7 @@ export default function PalestraPage() {
     try {
       const [palestrasData, funcData] = await Promise.all([
         getItens(API_ENDPOINT, { page, size: 5, tema: searchTerm }),
-        getItens("/funcionarios")
+        getItens("/funcionarios", { size: 1000 })
       ]);
 
       if (palestrasData.content) {
@@ -70,12 +70,18 @@ export default function PalestraPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // O backend espera "funcionarioId" no corpo para fazer o bind
-    if (isEditing) await updateItem(API_ENDPOINT, current.id, current);
-    else await createItem(API_ENDPOINT, current);
+    if (isEditing) {
+      await updateItem(API_ENDPOINT, current.id, current);
+      alert("Palestra atualizada com sucesso!");
+    }
+    else {
+      await createItem(API_ENDPOINT, current);
+      alert("Palestra cadastrada com sucesso!");
+    }
     fetch(); setIsModalOpen(false);
   };
 
-  const handleDelete = async (id) => { if (confirm("Excluir?")) { await deleteItem(API_ENDPOINT, id); fetch(); } };
+  const handleDelete = async (id) => { if (confirm("Excluir?")) { await deleteItem(API_ENDPOINT, id); alert("Palestra excluída com sucesso!"); fetch(); } };
 
   return (
     <div>

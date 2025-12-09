@@ -40,7 +40,7 @@ public class Animal {
     @JsonIgnoreProperties("animals")
     private Habitat habitat;
 
-    @OneToMany(mappedBy = "animal")
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Alimentacao> alimentacoes;
 

@@ -38,11 +38,17 @@ export default function EstoquePage() {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    if (isEditing) await updateItem(API_ENDPOINT, current.id, current);
-    else await createItem(API_ENDPOINT, current);
+    if (isEditing) {
+      await updateItem(API_ENDPOINT, current.id, current);
+      alert("Item atualizado com sucesso!");
+    }
+    else {
+      await createItem(API_ENDPOINT, current);
+      alert("Item cadastrado com sucesso!");
+    }
     setIsModalOpen(false); fetch();
   };
-  const handleDelete = async (id) => { if (confirm("Excluir?")) { await deleteItem(API_ENDPOINT, id); fetch(); } };
+  const handleDelete = async (id) => { if (confirm("Excluir?")) { await deleteItem(API_ENDPOINT, id); alert("Item excluído com sucesso!"); fetch(); } };
 
   return (
     <div>

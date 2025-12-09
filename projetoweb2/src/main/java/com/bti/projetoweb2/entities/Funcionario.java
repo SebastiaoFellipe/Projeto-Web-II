@@ -3,7 +3,10 @@ package com.bti.projetoweb2.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,6 +25,14 @@ public class Funcionario extends Pessoa {
     @ManyToMany(mappedBy = "funcionarios")
     @JsonIgnore
     private Set<Visita> visitas = new HashSet<>();
+
+    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Alimentacao> alimentacoes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Reabilitacao> reabilitacoes = new ArrayList<>();
     
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

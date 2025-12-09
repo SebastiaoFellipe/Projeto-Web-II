@@ -53,7 +53,7 @@ export default function AnimalPage() {
       setLoading(true);
       const [animaisData, habitatsData] = await Promise.all([
         getItens(API_ENDPOINT, { page, size: 5, nome: searchTerm }),
-        getItens("/habitats")
+        getItens("/habitats", { size: 1000 })
       ]);
 
       if (animaisData.content) {
@@ -113,8 +113,13 @@ export default function AnimalPage() {
         habitat: habitatSelecionado ? { id: habitatSelecionado.id } : null 
       };
       
-      if (isEditing) await updateItem(API_ENDPOINT, current.id, payload);
-      else await createItem(API_ENDPOINT, payload);
+      if (isEditing) {
+        await updateItem(API_ENDPOINT, current.id, payload);
+        alert("Animal atualizado com sucesso!");
+      } else {
+        await createItem(API_ENDPOINT, payload);
+        alert("Animal cadastrado com sucesso!");
+      }
       
       fetch(); 
       setIsModalOpen(false);
@@ -127,13 +132,17 @@ export default function AnimalPage() {
   const handleCreate = () => { setCurrent({ ...empty, habitatId: "" }); setIsEditing(false); setIsModalOpen(true); };
   const handleDelete = async (id) => {
     if (!window.confirm("Tem certeza que deseja excluir?")) return;
-    try { await deleteItem(API_ENDPOINT, id); fetch(); } catch (err) { alert(err.message); }
+    try {
+      await deleteItem(API_ENDPOINT, id);
+      alert("Animal excluído com sucesso!");
+      fetch();
+    } catch (err) { alert(err.message); }
   };
 
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16 }}>
-        <h1>Gerenciar {ENTITY}is</h1>
+        <h1>Gerenciar Animais</h1>
         <button className="btn btn-primary" onClick={handleCreate}>Novo {ENTITY}</button>
       </div>
 

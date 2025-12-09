@@ -43,7 +43,7 @@ export default function VisitaPage() {
     try {
       const [visitasData, funcData] = await Promise.all([
         getItens(API_ENDPOINT, { page, size: 5, nome: searchTerm }),
-        getItens("/funcionarios")
+        getItens("/funcionarios", { size: 1000 })
       ]);
 
       if (visitasData.content) {
@@ -107,8 +107,10 @@ export default function VisitaPage() {
 
       if (isEditing) {
         await updateItem(API_ENDPOINT, current.id, current, config);
+        alert("Visita atualizada com sucesso!");
       } else {
         await createItem(API_ENDPOINT, current, config);
+        alert("Visita cadastrada com sucesso!");
       }
       
       fetch(); 
@@ -119,7 +121,7 @@ export default function VisitaPage() {
     }
   };
   
-  const handleDelete = async (id) => { if(confirm("Excluir?")) { await deleteItem(API_ENDPOINT, id); fetch(); } };
+  const handleDelete = async (id) => { if(confirm("Excluir?")) { await deleteItem(API_ENDPOINT, id); alert("Visita excluída com sucesso!"); fetch(); } };
 
   return (
     <div>

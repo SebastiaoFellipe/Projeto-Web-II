@@ -11,7 +11,6 @@ const fields = [
   { name: "cpf", label: "CPF" },
   { name: "areaAplicada", label: "Área" },
   { name: "nivelAcademico", label: "Nível", type: "select", options: [{ value: "GRADUACAO", label: "Graduação" }, { value: "MESTRADO", label: "Mestrado" }, { value: "DOUTORADO", label: "Doutorado" }] },
-  // Como professor herda de funcionario, enviamos os campos padrão ocultos ou pré-definidos se o form não pedir
 ];
 
 const empty = { nome: "", cpf: "", areaAplicada: "", nivelAcademico: "MESTRADO", cargo: "Professor", tipoVinculo: "FIXO" };
@@ -38,12 +37,28 @@ export default function ProfessorPage() {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = { ...current, cargo: "Professor", tipoVinculo: "FIXO" }; // Defaults
-    if (isEditing) await updateItem(API_ENDPOINT, current.id, payload);
-    else await createItem(API_ENDPOINT, payload);
-    setIsModalOpen(false); fetch();
+    try {
+      const payload = { 
+        ...current, 
+        cargo: "Professor",
+        tipoVinculo: "FIXO"
+      };
+
+      if (isEditing) {
+        await updateItem(API_ENDPOINT, current.id, payload);
+        alert("Professor atualizado com sucesso!");
+      } else {
+        await createItem(API_ENDPOINT, payload);
+        alert("Professor cadastrado com sucesso!");
+      }
+      setIsModalOpen(false); 
+      fetch();
+    } catch(err) {
+      const serverMessage = err.response?.data || err.message;
+      alert("Erro ao salvar: " + serverMessage);
+    }
   };
-  const handleDelete = async (id) => { if (confirm("Excluir?")) { await deleteItem(API_ENDPOINT, id); fetch(); } };
+  const handleDelete = async (id) => { if (confirm("Excluir?")) { await deleteItem(API_ENDPOINT, id); alert("Professor excluído com sucesso!"); fetch(); } };
 
   return (
     <div>
